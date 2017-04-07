@@ -1,0 +1,74 @@
+:sourcedir: ../java
+
+= Final, Volatile, Transient - Was, Wozu und Warum?
+
+
+== Zunächst: Final als Konstanten
+
+Final als konstante Werte. Jeder Variable wird nur genau einmal gesetzt und kann nicht überschrieben werden.
+
+[source,java]
+----
+include::{sourcedir}/deepdive/finals/Constant.java[tags=aConstantFinalValue]
+----
+
+
+Final im Kontext eines Klassenattributs. Diese können im Konstuktor initialisiert werden, da dieser bei jeder
+Klasseninstanziierung ausgeführt wird.
+
+[source,java]
+----
+include::{sourcedir}/deepdive/finals/Constant.java[tags=constructor]
+----
+
+Das war noch einfach. Nun als kleine Grundlage:
+
+            
+== Das Java Memory Model (JMM)
+
+Das JMM ist eine Abstraktion des darunter liegendenden, plattformabhängigen Hardwaremodells.
+
+ +---------------------------+
+ |     Java memory model     |
+ +---------------------------+
+ +---------------------------+
+ |   Hardware memory model   |
+ +---------------------------+
+
+
+Im Modell hat jeder Thread seine eigene Ausführungseinheit und besitzt einen Speichercache. Die Hardware hat hier mit
+Level 1, 2 und 3 Caches, Hyperthreading etc. ein wesentlich komplexeres Modell, vor dem uns die JVM ein bisschen schützen will.
+
+    THREAD1                                    THREAD2
++-------------+                            +-------------+
+|             |       +------------+       |             |
+|  +-------+  |       |    MAIN    |       |  +-------+  |
+|  |  CPU  |  |       |   MEMORY   |       |  |  CPU  |  |
+|  +-------+  |       |            |       |  +-------+  |
+|             |       +------------+       |             |
+|  +-------+  |             ║              |  +-------+  |
+|  | CACHE |  |             ║              |  | CACHE |  |
+|  +-------+  |             ║              |  +-------+  |
+|            <══════════════╩═══════════════>            |
++-------------+            bus             +-------------+
+
+Beim Threadstart holt sich dieser alle notwendigen Daten aus dem Hauptspeicher in seinen Cache und vollführt
+in seiner Lebensdauer zwischen Cache und Hauptspeicher zwei Operationen.
+
+* `flush` Änderungen im Cache werden per `flush` in den Hauptspeicher zurück geschrieben.
+* `refresh` Das Laden von Daten aus dem Hauptspeicher nennt man `refresh`.
+
+Wann `flush` und `refresh` stattfinden bedingen die Regeln des JMM.
+Wir stellen uns damit also einige Fragen:
+
+* Atomicity: Welche Operationen sind atomar, d.h. werden nicht durch andere Threads unterbrochen?
+* Ordering: In welcher Reihenfolge passieren die Aktionen?
+* Visibility (Sequential Consistency): Wann werden Modifikationen im Speicher anderen Threads sichtbar gemacht?
+
+== Final im nebenläufigen Umfeld
+[source,java]
+----
+include::{sourcedir}/deepdive/finals/FinalConcurrent.java[tags=class]
+----
+
+
