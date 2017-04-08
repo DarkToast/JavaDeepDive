@@ -21,7 +21,7 @@ Klasseninstanziierung ausgeführt wird.
 include::{sourcedir}/deepdive/finals/Constant.java[tags=constructor]
 ----
 
-Das war noch einfach. Nun als kleine Grundlage:
+Das war noch einfach. Nun als kleine Grundlage für die nächsten Themen:
 
             
 == Das Java Memory Model (JMM)
