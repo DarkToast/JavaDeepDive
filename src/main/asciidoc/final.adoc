@@ -52,18 +52,28 @@ Level 1, 2 und 3 Caches, Hyperthreading etc. ein wesentlich komplexeres Modell, 
 |            <══════════════╩═══════════════>            |
 +-------------+            bus             +-------------+
 
-Beim Threadstart holt sich dieser alle notwendigen Daten aus dem Hauptspeicher in seinen Cache und vollführt
-in seiner Lebensdauer zwischen Cache und Hauptspeicher zwei Operationen.
+Beim Threadstart holt sich dieser alle notwendigen Daten aus dem Hauptspeicher in seinen Cache und benutzt
+zum Abgleich der Daten zwischen Cache und Hauptspeicher zwei Operationen.
 
-* `flush` Änderungen im Cache werden per `flush` in den Hauptspeicher zurück geschrieben.
-* `refresh` Das Laden von Daten aus dem Hauptspeicher nennt man `refresh`.
+* `flush` Änderungen im Cache werden in den Hauptspeicher zurück geschrieben.
+* `refresh` Aktuelle Daten aus dem Hauptspeicher wird in den Cache geladen.
 
-Wann `flush` und `refresh` stattfinden bedingen die Regeln des JMM.
-Wir stellen uns damit also einige Fragen:
+Wann `flush` und `refresh` stattfinden bedingen die komplexen Regeln des JMM. Das bedeutet für uns, dass Änderungen,
+die ein Thread an seinen Daten vornimmt, nicht unbedingt sofort in den Hauptspeicher zurückgeschrieben werden.
 
-* Atomicity: Welche Operationen sind atomar, d.h. werden nicht durch andere Threads unterbrochen?
-* Ordering: In welcher Reihenfolge passieren die Aktionen?
-* Visibility (Sequential Consistency): Wann werden Modifikationen im Speicher anderen Threads sichtbar gemacht?
+Damit stellen sich uns aufgrund dieses Modells einige Fragen:
+
+* _Atomicity_: *Welche Operationen sind atomar, d.h. werden nicht durch andere Threads unterbrochen?* +
+             Threads werden unterbrochen um Platz für andere Threads zu machen. Manche Operationen brauchen aber einen
+
+* _Ordering_: *In welcher Reihenfolge passieren die Aktionen?* +
+            Die Reihenfolge in der ein Tread seine Aktionen abarbeitet muss nicht zwangsläufig von einem anderen Thread
+            in dieser Reihenfolge gesehen werden. Compiler, Optimizer, CPUs machen gerne Reorderings, um performanter
+            Aktionen auszuführen.
+
+* _Visibility (Sequential Consistency)_: *Wann werden Modifikationen im Speicher anderen Threads sichtbar gemacht?*
+            Durch die `flush` und `refresh` Operationen, sehen andere Threads Änderungen an gemeinsam genutzte Variablen
+            ggf. sehr viel später.
 
 == Final im nebenläufigen Umfeld
 [source,java]
