@@ -9,7 +9,7 @@ Final als konstante Werte. Jeder Variable wird nur genau einmal gesetzt und kann
 
 [source,java]
 ----
-include::{sourcedir}/deepdive/finals/Constant.java[tags=aConstantFinalValue]
+include::{sourcedir}/deepdive/final_transient_volatile/Constant.java[tags=aConstantFinalValue]
 ----
 
 
@@ -18,7 +18,7 @@ Klasseninstanziierung ausgeführt wird.
 
 [source,java]
 ----
-include::{sourcedir}/deepdive/finals/Constant.java[tags=constructor]
+include::{sourcedir}/deepdive/final_transient_volatile/Constant.java[tags=constructor]
 ----
 
 Das war noch einfach. Nun als kleine Grundlage für die nächsten Themen:
@@ -78,7 +78,7 @@ Damit stellen sich uns aufgrund dieses Modells einige Fragen:
 == Final im nebenläufigen Umfeld
 [source,java]
 ----
-include::{sourcedir}/deepdive/finals/FinalConcurrent.java[tags=class]
+include::{sourcedir}/deepdive/final_transient_volatile/FinalConcurrent.java[tags=class]
 ----
 
 

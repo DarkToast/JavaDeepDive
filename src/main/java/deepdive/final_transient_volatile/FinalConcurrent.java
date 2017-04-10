@@ -1,4 +1,4 @@
-package deepdive.finals;
+package deepdive.final_transient_volatile;
 
 import deepdive.Thread2;
 import deepdive.Thread1;

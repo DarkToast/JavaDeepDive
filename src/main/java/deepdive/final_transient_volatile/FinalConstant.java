@@ -1,11 +1,11 @@
-package deepdive.finals;
+package deepdive.final_transient_volatile;
 
 // tag::constructor[]
-class Constant {
+class FinalConstant {
 
     final int i;
 
-    public Constant() {
+    public FinalConstant() {
         i = 4;  // <- or in the constructor, which is a special method.
                 // This is the position where a final variable can be initialized.
     }
