@@ -3,7 +3,26 @@
 = Final, Volatile, Transient - Was, Wozu und Warum?
 
 
-== Zunächst: Final als Konstanten
+== Ganz schnell: Transient
+Transient ist ein Marker für Variablen, welche bei einer Serialisierung ignoriert werden sollen. Aus der Zeit vor Json
+und Jackson und `@JsonIgnore` Annotations konnte man bereits dort Objekte partiell serialisieren.
+
+[source,java]
+----
+include::{sourcedir}/deepdive/final_transient_volatile/Transient.java[tags=class]
+----
+
+
+Wird die Transient nun serialisiert und wieder deserialisiert, hat `value2` den Wert `null`.
+
+ Transient{value1='Hallo', value2='Welt'}
+ Transient{value1='Hallo', value2='null'}
+
+`transient` klappt übrigens auch wuenderbar mit einer Jackson Json Serialisierung und kann als "native" Alternative
+zu `@JsonIgnore` genutzt werden.
+
+
+== Nun: Final als Konstanten
 
 Final als konstante Werte. Jeder Variable wird nur genau einmal gesetzt und kann nicht überschrieben werden.
 
