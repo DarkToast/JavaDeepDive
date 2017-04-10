@@ -28,7 +28,7 @@ Final als konstante Werte. Jeder Variable wird nur genau einmal gesetzt und kann
 
 [source,java]
 ----
-include::{sourcedir}/deepdive/final_transient_volatile/Constant.java[tags=aConstantFinalValue]
+include::{sourcedir}/deepdive/final_transient_volatile/FinalConstant.java[tags=aConstantFinalValue]
 ----
 
 
@@ -37,7 +37,7 @@ Klasseninstanziierung ausgeführt wird.
 
 [source,java]
 ----
-include::{sourcedir}/deepdive/final_transient_volatile/Constant.java[tags=constructor]
+include::{sourcedir}/deepdive/final_transient_volatile/FinalConstant.java[tags=constructor]
 ----
 
 Das war noch einfach. Nun als kleine Grundlage für die nächsten Themen:
