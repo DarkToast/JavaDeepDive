@@ -96,7 +96,38 @@ Damit stellen sich uns aufgrund dieses Modells einige Fragen:
             Durch die `flush` und `refresh` Operationen, sehen andere Threads Änderungen an gemeinsam genutzte Variablen
             ggf. sehr viel später.
 
+
+Beispiele:
+[source,java]
+----
+include::{sourcedir}/deepdive/final_transient_volatile/JmmPitfalls.java[tags=jmm]
+----
+
+* `number`: Ein long mit 64bit Länge. Auf 32 bit Systemen kann es passieren, dass beim Lesen nur die Hälfte des Werts
+           gesetzt ist. -> _Atomicity_
+* `flag`: Die JVM garantiert uns für ein Boolean immer einen atomaren Zugriff. Soweit so gut.
+        Problem gelöst. Allerdings ist hier noch lange nicht gesagt, dass der Wert auch aus dem Cache von `Thread1`
+        geflusht wurde. -> _Sequential Consistency_
+* `read`: Die Methode geht davon aus, dass zuert die long-Variable und dann erst das flag auf true gesetzt wurde.
+          Wenn also die Bedingung erfüllt ist, geben wir immer den richtigen Wert auf der Konsole aus? Oh... Doch nicht.
+          Beim Flush von `Thread1` in den Hauptspeicher und dem refresh von `Thread2` kann es passieren, dass beide
+          Anweisungen gedreht werden -> _Reordering_
+
+
 == Final im nebenläufigen Umfeld
+
+In folgender Klasse werden zwei Werte definiert. Eine ist final, die andere nicht. Im ersten Thread und damit in seinem
+Cache wird der Konstruktor aufgerufen und die Werte gesetzt.
+
+`Thread2` wiederum hat nun das Problem der _Sequential Consistency_. Aber wann werden jetzt die Variablen `f`, `x` und
+`y` von Thread1 in den Hauptspeicher geflusht? Für `f` ist es dabei noch relativ egal. Aber wenn wir beim Auslesen in
+`Thread2` auf einmal `f` sehen, `x` und `y` aber noch nicht geflusht wurden, kann es zu unvorhergesehenen Ereignissen kommen.
+
+Hier hilft nun das `final`. Da einer `final`-Varible nur einmal ein Wert zugewiesen werden kann, wird bei genau dieser
+Zuweisung ein partierller `flush` ausgeführt und die Variable wird im gesamten Speicher propagiert.
+Für `Thread2` bedeutet das, wannimmer ein lesender Zugriff auf eine `final`-Variable geschieht, gearaniert und das JMM,
+dass der Wert aktuell und korrekt ist.
+
 [source,java]
 ----
 include::{sourcedir}/deepdive/final_transient_volatile/FinalConcurrent.java[tags=class]

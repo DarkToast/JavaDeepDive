@@ -4,17 +4,21 @@ import deepdive.Thread1;
 import deepdive.Thread2;
 
 // tag::jmm[]
-class JMM {
-    String message;
+class JmmPitfalls {
+    long number;
+    boolean flag;
 
     @Thread1
     void write() {
-        message = "Hallo welt";
+        number = 999999999999L;
+        flag = true;
     }
 
     @Thread2
     void read() {
-        System.out.println(message);
+        if(flag) {
+            System.out.println(number);
+        }
     }
 }
 // end::jmm[]

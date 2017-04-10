@@ -26,7 +26,7 @@ class FinalConcurrent {
     static void reader() {
         if(f != null) {
             int i = f.x;    // <- The JMM guarantees that this is 3!
-            int y = f.y;    // <- Maybe sees the value 0
+            int y = f.y;    // <- Maybe sees the value 0 - Sequential Consistency!
         }
     }
 }
