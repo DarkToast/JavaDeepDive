@@ -107,7 +107,7 @@ include::{sourcedir}/deepdive/final_transient_volatile/JmmPitfalls.java[tags=jmm
           gesetzt ist. -> _Atomicity_
 * `flag`: Die JVM garantiert uns für ein Boolean immer einen atomaren Zugriff. Soweit so gut.
           Problem gelöst! Allerdings ist hier noch lange nicht gesagt, dass der Wert auch aus dem Cache von `Thread1`
-          geflusht wurde. `Thread2` kann noch immer `false`sehen. -> _Sequential Consistency_
+          geflusht wurde. `Thread2` kann noch immer `false`sehen. -> _mangelnde Sequential Consistency_
 * `read`: Die Methode geht davon aus, dass zuerst die long-Variable und dann erst das flag auf true gesetzt wurde.
           Wenn also die Bedingung erfüllt ist, geben wir immer den richtigen Wert auf der Konsole aus? Oh... Doch nicht.
           Beim Flush von `Thread1` in den Hauptspeicher und dem refresh von `Thread2` kann es passieren, dass beide
@@ -131,6 +131,13 @@ dass der Wert aktuell und korrekt ist.
 [source,java]
 ----
 include::{sourcedir}/deepdive/final_transient_volatile/FinalConcurrent.java[tags=class]
+----
+
+== Volatile - Der kleine Bruder von synchronized
+
+[source,java]
+----
+include::{sourcedir}/deepdive/final_transient_volatile/Volatile.java[tags=class]
 ----
 
 
