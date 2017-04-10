@@ -93,7 +93,7 @@ Damit stellen sich uns aufgrund dieses Modells einige Fragen:
             ihr übrigens.
 
 * _Visibility (Sequential Consistency)_: *Wann werden Modifikationen im Speicher anderen Threads sichtbar gemacht?*
-            Durch die `flush` und `refresh` Operationen, sehen andere Threads Änderungen an gemeinsam genutzte Variablen
+            Durch die `flush` und `refresh` Operationen, sehen andere Threads Änderungen an gemeinsam genutzten Variablen
             ggf. sehr viel später.
 
 
@@ -104,14 +104,14 @@ include::{sourcedir}/deepdive/final_transient_volatile/JmmPitfalls.java[tags=jmm
 ----
 
 * `number`: Ein long mit 64bit Länge. Auf 32 bit Systemen kann es passieren, dass beim Lesen nur die Hälfte des Werts
-           gesetzt ist. -> _Atomicity_
+          gesetzt ist. -> _Atomicity_
 * `flag`: Die JVM garantiert uns für ein Boolean immer einen atomaren Zugriff. Soweit so gut.
-        Problem gelöst. Allerdings ist hier noch lange nicht gesagt, dass der Wert auch aus dem Cache von `Thread1`
-        geflusht wurde. -> _Sequential Consistency_
-* `read`: Die Methode geht davon aus, dass zuert die long-Variable und dann erst das flag auf true gesetzt wurde.
+          Problem gelöst! Allerdings ist hier noch lange nicht gesagt, dass der Wert auch aus dem Cache von `Thread1`
+          geflusht wurde. `Thread2` kann noch immer `false`sehen. -> _Sequential Consistency_
+* `read`: Die Methode geht davon aus, dass zuerst die long-Variable und dann erst das flag auf true gesetzt wurde.
           Wenn also die Bedingung erfüllt ist, geben wir immer den richtigen Wert auf der Konsole aus? Oh... Doch nicht.
           Beim Flush von `Thread1` in den Hauptspeicher und dem refresh von `Thread2` kann es passieren, dass beide
-          Anweisungen gedreht werden -> _Reordering_
+          Anweisungen gedreht werden, sodass `flag` bereits `true` ist, number aber noch `0L` -> _Reordering_
 
 
 == Final im nebenläufigen Umfeld
