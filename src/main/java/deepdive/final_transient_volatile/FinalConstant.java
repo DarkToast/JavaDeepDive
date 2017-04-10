@@ -7,7 +7,7 @@ class FinalConstant {
 
     public FinalConstant() {
         i = 4;  // <- or in the constructor, which is a special method.
-                // This is the position where a final variable can be initialized.
+                // This is the latest position where a final variable can be initialized.
     }
 
 // end::constructor[]

@@ -26,7 +26,6 @@ class Transient implements Serializable {
     }
 // end::class[]
 
-// tag::main[]
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         final Transient aTransient = new Transient("Hallo", "Welt");
 
@@ -49,5 +48,4 @@ class Transient implements Serializable {
         // Value 2 is null
         System.out.println(deserialized);
     }
-// end::main[]
 }

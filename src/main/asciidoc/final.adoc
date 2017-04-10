@@ -4,8 +4,8 @@
 
 
 == Ganz schnell: Transient
-Transient ist ein Marker für Variablen, welche bei einer Serialisierung ignoriert werden sollen. Aus der Zeit vor Json
-und Jackson und `@JsonIgnore` Annotations konnte man bereits dort Objekte partiell serialisieren.
+`transient` ist ein Marker für Variablen, welche bei einer Serialisierung ignoriert werden sollen. Lange vor Json,
+Jackson und `@JsonIgnore`-Annotations konnte man bereits dort Objekte partiell serialisieren.
 
 [source,java]
 ----
@@ -24,7 +24,7 @@ zu `@JsonIgnore` genutzt werden.
 
 == Nun: Final als Konstanten
 
-Final als konstante Werte. Jeder Variable wird nur genau einmal gesetzt und kann nicht überschrieben werden.
+Final als konstanter Werte. Jede Variable wird nur genau einmal gesetzt und kann nicht überschrieben werden.
 
 [source,java]
 ----
@@ -32,7 +32,7 @@ include::{sourcedir}/deepdive/final_transient_volatile/FinalConstant.java[tags=a
 ----
 
 
-Final im Kontext eines Klassenattributs. Diese können im Konstuktor initialisiert werden, da dieser bei jeder
+Final im Kontext eines Klassenattributs. Diese können dabei auch und nur im Konstuktor initialisiert werden, da dieser bei jeder
 Klasseninstanziierung ausgeführt wird.
 
 [source,java]
@@ -40,7 +40,7 @@ Klasseninstanziierung ausgeführt wird.
 include::{sourcedir}/deepdive/final_transient_volatile/FinalConstant.java[tags=constructor]
 ----
 
-Das war noch einfach. Nun als kleine Grundlage für die nächsten Themen:
+Das war noch recht einfach. Nun als kleine Grundlage für die nächsten Themen:
 
             
 == Das Java Memory Model (JMM)
@@ -71,24 +71,26 @@ Level 1, 2 und 3 Caches, Hyperthreading etc. ein wesentlich komplexeres Modell, 
 |            <══════════════╩═══════════════>            |
 +-------------+            bus             +-------------+
 
-Beim Threadstart holt sich dieser alle notwendigen Daten aus dem Hauptspeicher in seinen Cache und benutzt
-zum Abgleich der Daten zwischen Cache und Hauptspeicher zwei Operationen.
+Beim Threadstart lädt sich dieser alle notwendigen Daten aus dem Hauptspeicher in seinen Cache und benutzt
+zum Abgleich der Daten zwischen Cache und Hauptspeicher zwei Operationen:
 
 * `flush` Änderungen im Cache werden in den Hauptspeicher zurück geschrieben.
 * `refresh` Aktuelle Daten aus dem Hauptspeicher wird in den Cache geladen.
 
-Wann `flush` und `refresh` stattfinden bedingen die komplexen Regeln des JMM. Das bedeutet für uns, dass Änderungen,
+Wann `flush` und `refresh` stattfinden bedingen die Regeln des JMM. Das bedeutet für uns, dass Änderungen,
 die ein Thread an seinen Daten vornimmt, nicht unbedingt sofort in den Hauptspeicher zurückgeschrieben werden.
 
 Damit stellen sich uns aufgrund dieses Modells einige Fragen:
 
 * _Atomicity_: *Welche Operationen sind atomar, d.h. werden nicht durch andere Threads unterbrochen?* +
              Threads werden unterbrochen um Platz für andere Threads zu machen. Manche Operationen brauchen aber einen
+             unterbrechungsfreien Ablauf.
 
 * _Ordering_: *In welcher Reihenfolge passieren die Aktionen?* +
             Die Reihenfolge in der ein Tread seine Aktionen abarbeitet muss nicht zwangsläufig von einem anderen Thread
             in dieser Reihenfolge gesehen werden. Compiler, Optimizer, CPUs machen gerne Reorderings, um performanter
-            Aktionen auszuführen.
+            Aktionen auszuführen. Parzielle flushs, welche nur einen Teil der Änderungen auf einmal postulieren tun
+            ihr übrigens.
 
 * _Visibility (Sequential Consistency)_: *Wann werden Modifikationen im Speicher anderen Threads sichtbar gemacht?*
             Durch die `flush` und `refresh` Operationen, sehen andere Threads Änderungen an gemeinsam genutzte Variablen
