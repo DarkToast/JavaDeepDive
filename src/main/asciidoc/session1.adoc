@@ -155,7 +155,13 @@ Sequential Consistency aufrechtzuerhalten.
 include::{sourcedir}/deepdive/final_transient_volatile/Volatile.java[tags=class]
 ----
 
+Bei einem Zugriff auf eine `volatile` Variable wird der schreibende Thread gezwungen, seinen kompletten lokalen Cache
+mit dem Hauptspeicher abzugleichen. Also einen globalen `flush` zu vollführen. Auf der Gegenseite, muss ein Thread, der
+lesend auf eine `volatile` Variable zugreift, diese immer aus dem Hauptspeicher per `refresh` aktualisieren.
 
+*Achtung: Geflusht werden dabei lediglich primitive Werte und Objektreferenzen. Nicht die Objekte selbst!* Diese müssen
+selbst für ihre Konsistenz sorgen. Auch sollte man beachten, dass ein kompletter Abgleich mit dem Hauptspeicher sehr
+resourcenintensiv ist. Daher gilt auch hier wieder: _So viel immutable wie möglich, so viel mutable wie nötig._
 
-
-
+Im oberen Beispiel können wir uns also sicher sein, dass beim lesenden Zugriff auf `flag` uns das JMM immer den gerade
+aktuellen Wert aus dem letzten schreibenden Thread zusichert.
