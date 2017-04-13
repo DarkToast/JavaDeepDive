@@ -37,8 +37,8 @@ include::{sourcedir}/deepdive/final_transient_volatile/FinalConstant.java[tags=a
 ----
 
 
-Final im Kontext eines Klassenattributs. Diese können dabei auch und nur im Konstuktor initialisiert werden, da dieser bei jeder
-Klasseninstanziierung ausgeführt wird.
+Final im Kontext eines Klassenattributs. Diese können dabei und im Klassenkontext oder im Konstuktor initialisiert
+werden, da dieser bei der Objecterzeugung aufgerufen wird. Andere Methoden sind tabu.
 
 [source,java]
 ----
@@ -139,6 +139,8 @@ include::{sourcedir}/deepdive/final_transient_volatile/FinalConcurrent.java[tags
 ----
 
 == Volatile - Der kleine Bruder von synchronized
+
+Für  
 
 [source,java]
 ----
