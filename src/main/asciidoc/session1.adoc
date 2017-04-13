@@ -1,6 +1,6 @@
 :sourcedir: ../java
 
-= Final, Volatile, Transient - Was, Wozu und Warum?
+= Final, Volatile, Transient und Synchronized - Was, Wozu und Warum?
 
 
 == Ganz schnell: Transient
@@ -13,18 +13,23 @@ include::{sourcedir}/deepdive/final_transient_volatile/Transient.java[tags=class
 ----
 
 
-Wird die Transient nun serialisiert und wieder deserialisiert, hat `value2` den Wert `null`.
+Wird die Transientvariable nun serialisiert und wieder deserialisiert, hat `value2` den Wert `null`.
 
- Transient{value1='Hallo', value2='Welt'}
- Transient{value1='Hallo', value2='null'}
+ Vorher  : Transient{value1='Hallo', value2='Welt'}
+ Nachher : Transient{value1='Hallo', value2='null'}
 
-`transient` klappt übrigens auch wuenderbar mit einer Jackson Json Serialisierung und kann als "native" Alternative
-zu `@JsonIgnore` genutzt werden.
+`transient` funktioniert übrigens auch wunderbar mit einer Json-Serialisierung mit Jackson und kann als "native"
+Alternative zu `@JsonIgnore` genutzt werden.
 
+== Object lifecycle
+[source,java]
+----
+include::{sourcedir}/deepdive/final_transient_volatile/Lifecycle.java[tags=class]
+----
 
 == Nun: Final als Konstanten
 
-Final als konstanter Werte. Jede Variable wird nur genau einmal gesetzt und kann nicht überschrieben werden.
+Final als konstanter Wert. Jede Variable wird nur genau einmal gesetzt und kann nicht überschrieben werden.
 
 [source,java]
 ----

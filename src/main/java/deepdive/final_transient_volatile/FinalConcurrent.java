@@ -8,6 +8,7 @@ class FinalConcurrent {
     final int x;  // <- X is final
     int y;        // <- Y not
 
+    // not synchronized!
     public FinalConcurrent() {
         x = 3;
         y = 4;
