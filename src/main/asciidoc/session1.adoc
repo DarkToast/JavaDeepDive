@@ -37,15 +37,15 @@ include::{sourcedir}/deepdive/final_transient_volatile/FinalConstant.java[tags=a
 ----
 
 
-Final im Kontext eines Klassenattributs. Diese können dabei und im Klassenkontext oder im Konstuktor initialisiert
-werden, da dieser bei der Objecterzeugung aufgerufen wird. Andere Methoden sind tabu.
+Final im Kontext eines Klassenattributs. Diese können dabei im Klassenkontext oder im Konstuktor initialisiert
+werden, da dieser bei der Objekterzeugung aufgerufen wird. Andere Methoden sind tabu.
 
 [source,java]
 ----
 include::{sourcedir}/deepdive/final_transient_volatile/FinalConstant.java[tags=constructor]
 ----
 
-Das war noch recht einfach. Nun als kleine Grundlage für die nächsten Themen:
+So, das war noch recht einfach. Nun als kleine Grundlage für die nächsten Themen:
 
             
 == Das Java Memory Model (JMM)
@@ -94,7 +94,7 @@ Damit stellen sich uns aufgrund dieses Modells einige Fragen:
 * _Ordering_: *In welcher Reihenfolge passieren die Aktionen?* +
             Die Reihenfolge in der ein Tread seine Aktionen abarbeitet muss nicht zwangsläufig von einem anderen Thread
             in dieser Reihenfolge gesehen werden. Compiler, Optimizer, CPUs machen gerne Reorderings, um performanter
-            Aktionen auszuführen. Parzielle flushs, welche nur einen Teil der Änderungen auf einmal postulieren tun
+            Aktionen auszuführen. Partielle flushs, welche nur einen Teil der Änderungen auf einmal postulieren tun
             ihr übrigens.
 
 * _Visibility (Sequential Consistency)_: *Wann werden Modifikationen im Speicher anderen Threads sichtbar gemacht?*
@@ -114,9 +114,9 @@ include::{sourcedir}/deepdive/final_transient_volatile/JmmPitfalls.java[tags=jmm
           Problem gelöst! Allerdings ist hier noch lange nicht gesagt, dass der Wert auch aus dem Cache von `Thread1`
           geflusht wurde. `Thread2` kann noch immer `false`sehen. -> _mangelnde Sequential Consistency_
 * `read`: Die Methode geht davon aus, dass zuerst die long-Variable und dann erst das flag auf true gesetzt wurde.
-          Wenn also die Bedingung erfüllt ist, geben wir immer den richtigen Wert auf der Konsole aus? Oh... Doch nicht.
+          Wenn also die if-Bedingung erfüllt ist, geben wir immer den richtigen Wert auf der Konsole aus? Oh... Doch nicht.
           Beim Flush von `Thread1` in den Hauptspeicher und dem refresh von `Thread2` kann es passieren, dass beide
-          Anweisungen gedreht werden, sodass `flag` bereits `true` ist, number aber noch `0L` -> _Reordering_
+          Anweisungen gedreht werden, sodass `flag` bereits `true` ist, number aber noch `0L` ist. -> _Reordering_
 
 
 == Final im nebenläufigen Umfeld
@@ -125,13 +125,15 @@ In folgender Klasse werden zwei Werte definiert. Eine ist final, die andere nich
 Cache wird der Konstruktor aufgerufen und die Werte gesetzt.
 
 `Thread2` wiederum hat nun das Problem der _Sequential Consistency_. Aber wann werden jetzt die Variablen `f`, `x` und
-`y` von Thread1 in den Hauptspeicher geflusht? Für `f` ist es dabei noch relativ egal. Aber wenn wir beim Auslesen in
-`Thread2` auf einmal `f` sehen, `x` und `y` aber noch nicht geflusht wurden, kann es zu unvorhergesehenen Ereignissen kommen.
+`y` von Thread1 in den Hauptspeicher geflusht? Für `f` ist es dabei noch relativ egal, da wir die Nichtexistenz des Objekts
+bereits im Code behandeln. Aber wenn wir beim Auslesen in `Thread2` auf einmal `f` sehen, `x` und `y` aber noch nicht
+geflusht wurden, kann es zu unvorhergesehenen Ereignissen kommen.
 
-Hier hilft nun das `final`. Da einer `final`-Varible nur einmal ein Wert zugewiesen werden kann, wird bei genau dieser
-Zuweisung ein partierller `flush` ausgeführt und die Variable wird im gesamten Speicher propagiert.
-Für `Thread2` bedeutet das, wannimmer ein lesender Zugriff auf eine `final`-Variable geschieht, gearaniert und das JMM,
-dass der Wert aktuell und korrekt ist.
+Hier hilft nun das `final`. Da einer `final`-Varible immer genau einmal ein Wert zugewiesen werden muss, wird bei genau
+dieser Zuweisung ein partieller `flush` ausgeführt und die Variable wird im gesamten Speicher propagiert.
+Für `Thread2` bedeutet das, wann immer ein lesender Zugriff auf eine `final`-Variable geschieht, gearaniert uns das JMM,
+dass der Wert aktuell und korrekt ist. Für `y` gilt diese Regel allerdings nicht. Hier kann es passieren, dass bei einem
+lesenden Zugriff der Wert noch 0 ist, obwohl das umgebende Objekt bereits sichtbar ist.
 
 [source,java]
 ----
@@ -140,12 +142,20 @@ include::{sourcedir}/deepdive/final_transient_volatile/FinalConcurrent.java[tags
 
 == Volatile - Der kleine Bruder von synchronized
 
-Für  
+Das Problem der mangelnden Sequential Consistency bei Konstanten hat uns im vorigen Beispiel das `final`abgenommen.
+Was ist nun aber mit den vielen nicht konstanten Werten, die sich während der Laufzeit des Programms fortwährend ändern?
+
+*Am besten gar nicht erst zulassen und mit so vielen immutable Objekten arbeiten wie möglich. ;-)*
+
+Aber wenn man nun doch ein shared value zwischen zwei oder mehreren Threads hat, so hilft einem `volatile`, die
+Sequential Consistency aufrechtzuerhalten.
 
 [source,java]
 ----
 include::{sourcedir}/deepdive/final_transient_volatile/Volatile.java[tags=class]
 ----
+
+
 
 
 
