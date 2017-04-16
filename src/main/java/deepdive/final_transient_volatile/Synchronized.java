@@ -1,5 +1,6 @@
 package deepdive.final_transient_volatile;
 
+import deepdive.Sleep;
 import deepdive.Thread1;
 import deepdive.Thread2;
 
@@ -36,8 +37,7 @@ class Synchronized {
 // end::unlocked[]
 
 
-
-// tag::this_synchronized[]
+    // tag::this_synchronized[]
     @Thread1
     public synchronized int pushSynced(String name) {
         // Will lock all other threads
@@ -61,9 +61,7 @@ class Synchronized {
 // end::this_synchronized[]
 
 
-
-
-// tag::lock_synchronized[]
+    // tag::lock_synchronized[]
     @Thread1
     public int pushSyncedLocal(String name) {
 
@@ -94,9 +92,7 @@ class Synchronized {
 // end::lock_synchronized[]
 
 
-
-
-// tag::lock_synchronized_notified[]
+    // tag::lock_synchronized_notified[]
     @Thread1
     public int pushNotified(String name) {
 
@@ -118,7 +114,7 @@ class Synchronized {
         synchronized (lock) {
 
             // Locking wait - must be notified somewhere to prevent a dead lock!
-            if(names.isEmpty()) {
+            if (names.isEmpty()) {
                 try {
                     lock.wait();
                 } catch (InterruptedException e) {
@@ -135,15 +131,9 @@ class Synchronized {
 // end::lock_synchronized_notified[]
 
 
-
     private void expensiveOperation() {
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            this.notifyAll();
-        }
+        Sleep.sleep();
     }
-
 
 
     public static void main(String[] args) throws InterruptedException {
