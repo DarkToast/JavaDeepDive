@@ -142,12 +142,12 @@ include::{sourcedir}/deepdive/final_transient_volatile/FinalConcurrent.java[tags
 
 == Volatile - Der kleine Bruder von synchronized
 
-Das Problem der mangelnden Sequential Consistency bei Konstanten hat uns im vorigen Beispiel das `final`abgenommen.
+Das Problem der mangelnden Sequential Consistency bei Konstanten hat uns im vorigen Beispiel das `final` abgenommen.
 Was ist nun aber mit den vielen nicht konstanten Werten, die sich während der Laufzeit des Programms fortwährend ändern?
 
 *Am besten gar nicht erst zulassen und mit so vielen immutable Objekten arbeiten wie möglich. ;-)*
 
-Aber wenn man nun doch ein shared value zwischen zwei oder mehreren Threads hat, so hilft einem `volatile`, die
+Aber wenn man nun doch einen shared value zwischen zwei oder mehreren Threads hat, so hilft einem `volatile`, die
 Sequential Consistency aufrechtzuerhalten.
 
 [source,java]
@@ -156,12 +156,79 @@ include::{sourcedir}/deepdive/final_transient_volatile/Volatile.java[tags=class]
 ----
 
 Bei einem Zugriff auf eine `volatile` Variable wird der schreibende Thread gezwungen, seinen kompletten lokalen Cache
-mit dem Hauptspeicher abzugleichen. Also einen globalen `flush` zu vollführen. Auf der Gegenseite, muss ein Thread, der
+mit dem Hauptspeicher abzugleichen. Also einen cache-globalen `flush` zu vollführen. Auf der Gegenseite, muss ein Thread, der
 lesend auf eine `volatile` Variable zugreift, diese immer aus dem Hauptspeicher per `refresh` aktualisieren.
 
-*Achtung: Geflusht werden dabei lediglich primitive Werte und Objektreferenzen. Nicht die Objekte selbst!* Diese müssen
-selbst für ihre Konsistenz sorgen. Auch sollte man beachten, dass ein kompletter Abgleich mit dem Hauptspeicher sehr
+CAUTION: Geflusht werden dabei lediglich primitive Werte und Objektreferenzen. Nicht die Objekte selbst!
+
+Diese müssen selbst für ihre Konsistenz sorgen. Auch sollte man beachten, dass ein kompletter Abgleich mit dem Hauptspeicher sehr
 resourcenintensiv ist. Daher gilt auch hier wieder: _So viel immutable wie möglich, so viel mutable wie nötig._
 
 Im oberen Beispiel können wir uns also sicher sein, dass beim lesenden Zugriff auf `flag` uns das JMM immer den gerade
 aktuellen Wert aus dem letzten schreibenden Thread zusichert.
+
+
+== Synchronized - Die eierlegende Wollmilchsau
+
+In den oberen Kapiteln haben wir gesehen, wie man mit `final` und `volatile` bereits einige Probleme des nebenläufigen
+Zugriffs lösen kann. Allerdings lösen sie noch nicht alle Probleme. `final` löst uns zwar das Problem der Atomicity
+und der Visibility für konstante, primitive Werte. Haben wir allerdings ein veränderliches Objekt auf einer `final`
+Referenz, so haben wir auch hier wieder einen nebenläufigen Zugriff auf dieses Objekt.
+
+Genauso verhält es sich mit `volatile`. Auch hier gilt, dass primitive Werte und Objektreferenzen synchronisiert werden.
+Ein veränderliches Objekt auf der Referenz aber nicht. Auch gilt es nur für eine Zuweisung. Brauchen wir die Atomicity,
+das Ordering und auch die Visibility für mehr als eine atomare Operation, so benötigen wir `synchronized`.
+
+Synchronized ist ein in die Sprache eingebauter Synchronisierungmutex, der einzelnen Threads erlaubt einen exklusiven
+Lock auf ein Objekt zu erlangen. Jedes Javaobjekt besitzt dabei einen Lock, der zur Synchronisation genutzt werden kann.
+
+Stoßen Threads auf einen Lock, der bereits im Besitz eines anderen Threads ist, so blockiert dieser Thread solange, bis
+er selbst einen Zugriff bekommt.
+
+CAUTION: Locks sollten behutsam verwendet werden. Ein nie freigegebener Lock resultiert in einem Deadlock!
+
+[source]
+----
+Object X
+
+Lo - Lock on X
+Wa - Wait for lock on X
+Fr - Free lock on X
+
+Thread1 --[A]---[B]---Lo║------------Fr║------------->
+                        +--║           +║
+Thread2 --[C]---[D]------Wa║==========Lo║--[E]--[F]-->
+----
+
+Im JMM ist dabei definiert, dass bei einem _erlangten Zugriff_ auf einen Lock, der Thread einen kompletten `refresh` auf
+seinen Cache vollführt. Im Gegenzug vollführt ein Thread beim loslassen eines Locks einen kompletten `flush` auf seinem
+Cache.
+
+
+
+*Nun aber Schritt für Schritt im Code:*
+
+Ohne irgendwelche Synchronisierung:
+[source,java]
+----
+include::{sourcedir}/deepdive/final_transient_volatile/Synchronized.java[tags=unlocked]
+----
+
+Synchronisierung über das gesamte Objekt:
+[source,java]
+----
+include::{sourcedir}/deepdive/final_transient_volatile/Synchronized.java[tags=this_synchronized]
+----
+
+Synchronisierung mit einem exklusiven Lockobjekt:
+[source,java]
+----
+include::{sourcedir}/deepdive/final_transient_volatile/Synchronized.java[tags=lock_synchronized]
+----
+
+Synchronisierung mit wait und notify zur vollständigen Synchronisierung:
+[source,java]
+----
+include::{sourcedir}/deepdive/final_transient_volatile/Synchronized.java[tags=lock_synchronized_notified]
+----
+
