@@ -179,8 +179,9 @@ Genauso verhält es sich mit `volatile`. Auch hier gilt, dass primitive Werte un
 Ein veränderliches Objekt auf der Referenz aber nicht. Auch gilt es nur für eine Zuweisung. Brauchen wir die Atomicity,
 das Ordering und auch die Visibility für mehr als eine atomare Operation, so benötigen wir `synchronized`.
 
+
 Synchronized ist ein in die Sprache eingebauter Synchronisierungmutex, der einzelnen Threads erlaubt einen exklusiven
-Lock auf ein Objekt zu erlangen. Jedes Javaobjekt besitzt dabei einen Lock, der zur Synchronisation genutzt werden kann.
+Lock auf ein Objekt zu erlangen. Jedes Javaobjekt kann dabei als Monitor mit einem eingebauten Lock genutzt werden kann.
 
 Stoßen Threads auf einen Lock, der bereits im Besitz eines anderen Threads ist, so blockiert dieser Thread solange, bis
 er selbst einen Zugriff bekommt.
@@ -206,29 +207,60 @@ Cache.
 
 
 
-*Nun aber Schritt für Schritt im Code:*
+=== Nun aber Schritt für Schritt im Code:
 
-Ohne irgendwelche Synchronisierung:
+==== Ohne irgendwelche Synchronisierung:
 [source,java]
 ----
 include::{sourcedir}/deepdive/final_transient_volatile/Synchronized.java[tags=unlocked]
 ----
 
-Synchronisierung über das gesamte Objekt:
+==== Synchronisierung über das gesamte Objekt:
 [source,java]
 ----
 include::{sourcedir}/deepdive/final_transient_volatile/Synchronized.java[tags=this_synchronized]
 ----
 
-Synchronisierung mit einem exklusiven Lockobjekt:
+==== Synchronisierung mit einem exklusiven Lockobjekt:
 [source,java]
 ----
 include::{sourcedir}/deepdive/final_transient_volatile/Synchronized.java[tags=lock_synchronized]
 ----
 
-Synchronisierung mit wait und notify zur vollständigen Synchronisierung:
+==== Synchronisierung mit wait und notify zur vollständigen Synchronisierung:
 [source,java]
 ----
 include::{sourcedir}/deepdive/final_transient_volatile/Synchronized.java[tags=lock_synchronized_notified]
 ----
 
+
+== java.util.concurrent - Viele kleine Helferlein
+*atomic long*
+[source,java]
+----
+include::{sourcedir}/deepdive/final_transient_volatile/ConcurrentLib.java[tags=atomicLong]
+----
+
+*copy on write array list*
+[source,java]
+----
+include::{sourcedir}/deepdive/final_transient_volatile/ConcurrentLib.java[tags=copyOnWriteArrayList]
+----
+
+*reentrant lock*
+[source,java]
+----
+include::{sourcedir}/deepdive/final_transient_volatile/ConcurrentLib.java[tags=reentrantLock]
+----
+
+*read write lock*
+[source,java]
+----
+include::{sourcedir}/deepdive/final_transient_volatile/ConcurrentLib.java[tags=readWriteLock]
+----
+
+*semaphore*
+[source,java]
+----
+include::{sourcedir}/deepdive/final_transient_volatile/ConcurrentLib.java[tags=semaphore]
+----

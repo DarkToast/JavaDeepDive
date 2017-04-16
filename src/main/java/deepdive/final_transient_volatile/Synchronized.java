@@ -8,7 +8,7 @@ import java.util.List;
 
 // tag::unlocked[]
 class Synchronized {
-    // An exclusive lock object.
+    // An exclusive monitor object.
     private final Object lock = new Object();
 
     // Only the reference is immutable!
