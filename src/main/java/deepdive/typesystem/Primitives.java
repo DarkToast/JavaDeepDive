@@ -33,4 +33,8 @@ public class Primitives {
     // double-precision 64-bit IEEE 754 floating point.
     double d = Double.MAX_VALUE;
     Double dO = d;
+
+    // native typed arrays
+    int[] iArray = new int[5];
+    Object[] oArray = new Object[5];
 }
