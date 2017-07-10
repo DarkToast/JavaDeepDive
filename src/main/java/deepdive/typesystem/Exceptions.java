@@ -24,4 +24,13 @@ public class Exceptions {
         throw new RuntimeException("unchecked");
     }
 
+    private void errors() {
+        throw new Error("You should not use this in your own code.");
+    }
+
+    static class Failure extends Throwable {}
+
+    private void myOwnFailure() throws Failure {
+        throw new Failure();
+    }
 }
