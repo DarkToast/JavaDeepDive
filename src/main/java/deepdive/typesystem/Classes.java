@@ -15,6 +15,9 @@ public class Classes {
 
     public void boxing(int i) {
         Integer ii = i;
+
+        // But this doesn't work. So autoboxing works not everywhere for every literal.
+        //System.out.println(2 instanceof Integer);
     }
 
     public void unboxing(Integer i) {
