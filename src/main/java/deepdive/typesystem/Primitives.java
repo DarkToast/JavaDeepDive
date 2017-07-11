@@ -2,6 +2,7 @@ package deepdive.typesystem;
 
 public class Primitives {
 
+    // tag::without_class[]
     // size not really defined
     boolean b = true;
     Boolean bo = b;
@@ -37,4 +38,19 @@ public class Primitives {
     // native typed arrays
     int[] iArray = new int[5];
     Object[] oArray = new Object[5];
+    // end::without_class[]
+
+    
+    // tag::autoboxing[]
+    public void boxing(int i) {
+        Integer ii = i;
+
+        // But this doesn't work. So autoboxing works not everywhere for every literal.
+        //System.out.println(2 instanceof Integer);
+    }
+
+    public void unboxing(Integer i) {
+        int ii = i;
+    }
+    // end::autoboxing[]
 }
