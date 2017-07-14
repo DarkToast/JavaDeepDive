@@ -35,7 +35,7 @@ include::{sourcedir}/deepdive/typesystem/Primitives.java[tags=autoboxing]
 ----
 Dabei ist es unerheblich, ob man die Zuweisung zu einer Variable oder den Wert als Parameter einer Methode übergibt.
 
-ABER: Das Autoboxing ist leider nicht ganz zu Ende gedacht. Schaut man sich folgendes Beispiel an, so würde man
+*Aber*: Das Autoboxing ist leider nicht ganz zu Ende gedacht. Schaut man sich folgendes Beispiel an, so würde man
 erwarten, dass das `2` Literal wie im oberen Beispiel zu einem `Integer` konvertiert und sodann an den `instanceof`
 Operator übergeben wird. Dem ist aber nicht so. Literale bleiben in dieser Konstruktion immer ihrem Primitivtyp treu.
 Hier wird also `false` ausgegebem.
@@ -44,3 +44,18 @@ Hier wird also `false` ausgegebem.
 ----
 include::{sourcedir}/deepdive/typesystem/Primitives.java[tags=autoboxing_strange]
 ----
+
+== Klassen
+Hier wird es objektorientiert.
+
+Der Kern des Java Typsystems besteht aus Klassen und Objekten und die Abhängigkeiten und Hierarchieren dazwischen. Als
+Basis gilt die allen Klassen gemeinsame Oberklasse `Object`.
+
+[source,java]
+----
+include::{sourcedir}/deepdive/typesystem/Classes.java[tags=classes]
+----
+
+Hier sehen wir auch direkt wieder eine Besonderheit bei den Literalen. Ein Stringliteral ist immer vom Typ `String`, ist
+also ein Objekt. So ist denn auch folgender Ausdruck valide `"Hallo".toString()` und auch das vorangegangene Beispiel
+klappt mit einem Stringliteral `"Hallo" instanceof Object`.
