@@ -11,7 +11,7 @@ public class RoverSpec {
     }
 
     @Test
-    void ARoverHasAStartPosition() {
+    public void ARoverHasAStartPosition() {
         //expect point 0,0
         Point p = getNewRover().getPosition();
 
@@ -20,13 +20,13 @@ public class RoverSpec {
     }
 
     @Test
-    void ARoverHasAStartDirectionToTheNorth() {
+    public void ARoverHasAStartDirectionToTheNorth() {
         //expect the direction to north.
         assertEquals(getNewRover().getDirection(), Direction.N);
     }
     
     @Test
-    void ARoverHasTheStartSpeedOf_1() {
+    public void ARoverHasTheStartSpeedOf_1() {
         // given: A new rover
         Rover r = getNewRover();
 
@@ -39,7 +39,7 @@ public class RoverSpec {
     }
 
     @Test
-    void ARoverCanTurnLeftToNorthWest() {
+    public void ARoverCanTurnLeftToNorthWest() {
         // given: A new rover
         Rover r = getNewRover();
 
@@ -51,7 +51,7 @@ public class RoverSpec {
     }
 
     @Test
-    void ARoverCanTurnRightToNorthEast() {
+    public void ARoverCanTurnRightToNorthEast() {
         // given: A new rover
         Rover r = getNewRover();
 
@@ -63,7 +63,7 @@ public class RoverSpec {
     }
 
     @Test
-    void ARoverCanMakeSeveralMovesOnPlanetMars() {
+    public void ARoverCanMakeSeveralMovesOnPlanetMars() {
         // given: A new rover
         Rover r = getNewRover();
 

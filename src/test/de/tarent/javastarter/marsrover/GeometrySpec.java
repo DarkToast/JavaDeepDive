@@ -9,7 +9,7 @@ public class GeometrySpec {
     Geometry geometry;
 
     @Test
-    void AGeometryShouldCalcTheNextPointToTheNorth() {
+    public void AGeometryShouldCalcTheNextPointToTheNorth() {
         //given a point
         Point p = new Point(1, 1);
 
@@ -22,7 +22,7 @@ public class GeometrySpec {
     }
 
     @Test
-    void AGeometryShouldCalcTheNextPointToNorthEast() {
+    public void AGeometryShouldCalcTheNextPointToNorthEast() {
         //given a point
         Point p = new Point(1, 1);
 
@@ -35,7 +35,7 @@ public class GeometrySpec {
     }
 
     @Test
-    void AGeometryShouldCalcTheNextPointToEast() {
+    public void AGeometryShouldCalcTheNextPointToEast() {
         //given a point
         Point p = new Point(1, 1);
 
@@ -48,7 +48,7 @@ public class GeometrySpec {
     }
 
     @Test
-    void AGeometryShouldCalcTheNextPointToSouthEast() {
+    public void AGeometryShouldCalcTheNextPointToSouthEast() {
         //given a point
         Point p = new Point(1, 1);
 
@@ -61,7 +61,7 @@ public class GeometrySpec {
     }
 
     @Test
-    void AGeometryShouldCalcTheNextPointToTheSouth() {
+    public void AGeometryShouldCalcTheNextPointToTheSouth() {
         //given a point
         Point p = new Point(1, 1);
 
@@ -74,7 +74,7 @@ public class GeometrySpec {
     }
 
     @Test
-    void AGeometryShouldCalcTheNextPointToTheSouthWest() {
+    public void AGeometryShouldCalcTheNextPointToTheSouthWest() {
         //given a point
         Point p = new Point(1, 1);
 
@@ -87,7 +87,7 @@ public class GeometrySpec {
     }
 
     @Test
-    void AGeometryShouldCalcTheNextPointToTheWest() {
+    public void AGeometryShouldCalcTheNextPointToTheWest() {
         //given a point
         Point p = new Point(1, 1);
 
@@ -100,7 +100,7 @@ public class GeometrySpec {
     }
 
     @Test
-    void AGeometryShouldCalcTheNextPointToTheNorthWest() {
+    public void AGeometryShouldCalcTheNextPointToTheNorthWest() {
         //given a point
         Point p = new Point(1, 1);
 
@@ -113,7 +113,7 @@ public class GeometrySpec {
     }
 
     @Test
-    void AGeometryHasItsBordersOn90OnX() {
+    public void AGeometryHasItsBordersOn90OnX() {
         //given a point
         Point p = new Point(90, 0);
 
@@ -126,7 +126,7 @@ public class GeometrySpec {
     }
 
     @Test
-    void AGeometryHasItsBordersOn90OnX_2() {
+    public void AGeometryHasItsBordersOn90OnX_2() {
         //given a point
         Point p = new Point(-89, 0);
 
@@ -139,7 +139,7 @@ public class GeometrySpec {
     }
     
     @Test
-    void AGeometryHasItsBordersOn180OnY() {
+    public void AGeometryHasItsBordersOn180OnY() {
         //given a point
         Point p = new Point(0, 180);
 
@@ -152,7 +152,7 @@ public class GeometrySpec {
     }
 
     @Test
-    void AGeometryHasItsBordersOn180OnY_2() {
+    public void AGeometryHasItsBordersOn180OnY_2() {
         //given a point
         Point p = new Point(0, -179);
 
