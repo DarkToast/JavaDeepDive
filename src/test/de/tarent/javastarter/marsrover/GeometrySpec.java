@@ -21,7 +21,20 @@ public class GeometrySpec {
         assertEquals(newP.getY(), 1);
     }
 
-   @Test
+    @Test
+    void AGeometryShouldCalcTheNextPointToNorthEast() {
+        //given a point
+        Point p = new Point(1, 1);
+
+        // when we calculate the next:
+        Point newP = geometry.next(p, Direction.NE, 2);
+
+        // We get a new point
+        assertEquals(newP.getX(), 3);
+        assertEquals(newP.getY(), 3);
+    }
+
+    @Test
     void AGeometryShouldCalcTheNextPointToEast() {
         //given a point
         Point p = new Point(1, 1);
@@ -32,6 +45,19 @@ public class GeometrySpec {
         // We get a new point
         assertEquals(newP.getX(), 1);
         assertEquals(newP.getY(), 5);
+    }
+
+    @Test
+    void AGeometryShouldCalcTheNextPointToSouthEast() {
+        //given a point
+        Point p = new Point(1, 1);
+
+        // when we calculate the next:
+        Point newP = geometry.next(p, Direction.SE, 1);
+
+        // We get a new point
+        assertEquals(newP.getX(), 0);
+        assertEquals(newP.getY(), 2);
     }
 
     @Test
@@ -47,7 +73,20 @@ public class GeometrySpec {
         assertEquals(newP.getY(), 1);
     }
 
-   @Test
+    @Test
+    void AGeometryShouldCalcTheNextPointToTheSouthWest() {
+        //given a point
+        Point p = new Point(1, 1);
+
+        // when we calculate the next:
+        Point newP = geometry.next(p, Direction.SW, 3);
+
+        // We get a new point
+        assertEquals(newP.getX(), -2);
+        assertEquals(newP.getY(), -2);
+    }
+
+    @Test
     void AGeometryShouldCalcTheNextPointToTheWest() {
         //given a point
         Point p = new Point(1, 1);
@@ -57,6 +96,19 @@ public class GeometrySpec {
 
         // We get a new point
         assertEquals(newP.getX(), 1);
+        assertEquals(newP.getY(), -2);
+    }
+
+    @Test
+    void AGeometryShouldCalcTheNextPointToTheNorthWest() {
+        //given a point
+        Point p = new Point(1, 1);
+
+        // when we calculate the next:
+        Point newP = geometry.next(p, Direction.NW, 3);
+
+        // We get a new point
+        assertEquals(newP.getX(), 3);
         assertEquals(newP.getY(), -2);
     }
 
