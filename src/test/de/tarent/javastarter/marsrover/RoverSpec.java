@@ -78,7 +78,7 @@ public class RoverSpec {
             .setSpeed(1)
             .moveBackward(); // 2, -3
 
-        // then: The          
+        // then: The rover is on its position
         assertEquals(movedRover.getDirection() , Direction.SW);
         assertEquals(movedRover.getPosition().getX() , 2);
         assertEquals(movedRover.getPosition().getY() , -3);
