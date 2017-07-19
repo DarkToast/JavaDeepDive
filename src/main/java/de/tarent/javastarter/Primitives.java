@@ -1,4 +1,4 @@
-package deepdive.typesystem;
+package de.tarent.javastarter;
 
 public class Primitives {
 

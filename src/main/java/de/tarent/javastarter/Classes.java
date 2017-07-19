@@ -1,4 +1,4 @@
-package deepdive.typesystem;
+package de.tarent.javastarter;
 
 import java.util.ArrayList;
 
