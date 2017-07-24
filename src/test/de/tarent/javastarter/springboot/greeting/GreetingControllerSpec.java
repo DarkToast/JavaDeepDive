@@ -1,22 +1,15 @@
 package de.tarent.javastarter.springboot.greeting;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoRule;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
 
-import static org.mockito.Mockito.*;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class GreetingControllerSpec {
     GreetingRepository repository;
@@ -25,6 +18,8 @@ public class GreetingControllerSpec {
 
     @Before
     public void setup() {
+        // With the test library `Mockito`, we can generate a "mock" for concrete classes.
+        // Mocks has the same methods, but may have another behaviour.
         repository = mock(GreetingRepository.class);
         controller = new GreetingController(repository);
     }
@@ -36,8 +31,9 @@ public class GreetingControllerSpec {
     }
 
     @Test
-    public void AControllerReturnsAllRepoObjects() {
+    public void AControllerReturnsAllRepoObjectsAsList() {
         // given: A list of mocked greetings
+        // With `when` and `thenReturn`, we can control the behaviour of the mock:
         when(repository.getAll()).thenReturn(Collections.singletonList(new Greeting(0, "Hallo")));
 
         // when: We call the controller
@@ -56,7 +52,7 @@ public class GreetingControllerSpec {
     }
 
     @Test
-    public void AControllerReturnsASingleRepoObject() {
+    public void AControllerReturnsASingleGreetingObject() {
         // given: A single greeting
         when(repository.get(0)).thenReturn(new Greeting(0, "Hallo"));
 
