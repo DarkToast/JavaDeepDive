@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @SpringBootTest(classes = {Application.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
@@ -44,6 +45,15 @@ public class GreetingRepositorySpec {
         //then
         assertEquals(2, greeting.getId());
         assertEquals("Hello World", greeting.getGreeting());
+    }
+
+    @Test
+    public void aRepoReceivesANullOnANotExistingId() {
+        // when
+        Greeting greeting = repository.get(4711);
+
+        //then
+        assertNull(greeting);
     }
 
 }
