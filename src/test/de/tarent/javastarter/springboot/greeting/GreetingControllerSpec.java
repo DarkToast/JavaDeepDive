@@ -41,8 +41,8 @@ public class GreetingControllerSpec {
 
         // expect
         assertEquals(1, greetings.size());
-        assertEquals(0, greetings.get(0).id);
-        assertEquals("Hallo", greetings.get(0).greeting);
+        assertEquals(0, greetings.get(0).getId());
+        assertEquals("Hallo", greetings.get(0).getGreeting());
     }
 
     @Test
@@ -60,8 +60,8 @@ public class GreetingControllerSpec {
         Greeting greeting = controller.get(0).getBody();
 
         // expect
-        assertEquals(0, greeting.id);
-        assertEquals("Hallo", greeting.greeting);
+        assertEquals(0, greeting.getId());
+        assertEquals("Hallo", greeting.getGreeting());
     }
 
 }

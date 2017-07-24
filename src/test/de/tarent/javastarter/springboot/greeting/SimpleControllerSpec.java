@@ -30,7 +30,7 @@ public class SimpleControllerSpec {
     @Test
     public void aSimpleControllerJsonReturnsAGreeting() {
         // expect
-        assertEquals("Hallo Welt", simpleController.getJson().getBody().greeting);
+        assertEquals("Hallo Welt", simpleController.getJson().getBody().getGreeting());
     }
 
 

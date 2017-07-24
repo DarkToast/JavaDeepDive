@@ -6,7 +6,7 @@ spring:
     driverClassName: org.h2.Driver
     url: jdbc:h2:mem:test;MODE=PostgreSQL
     password: "egal"
-    username: ""
+    username: "egal"
           
 server:
   port: 8080
