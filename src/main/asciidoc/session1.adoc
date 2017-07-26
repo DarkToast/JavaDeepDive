@@ -1,6 +1,6 @@
 :sourcedir: ../java
 
-= Final, Volatile, Transient und Synchronized - Was, Wozu und Warum?
+= Teil 1 : Final, Volatile, Transient und Synchronized - Was, Wozu und Warum?
 
 
 == Ganz schnell: Transient
