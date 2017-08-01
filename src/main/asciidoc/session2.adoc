@@ -117,7 +117,7 @@ include::{sourcedir}/deepdive/typesystem/NullAndVoid.java[tags=void_as_generic]
 ----
 
 Wenn man jetzt meint, das `Void` und `void` sich wie `Integer` und `int` verhalten, der wird leider enttäuscht.
-`Void` kann nicht `void` sein. Dafür aber `null`, und nur `null`
+`Void` kann nicht `void` sein. Dafür aber `null`, und nur `null`.
 
 [source,java]
 ----
