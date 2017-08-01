@@ -2,8 +2,8 @@
 
 = Teil 2 : Das Java Typsystem und wo es sich nur für eins hält.
 
-Wie in jeder anderen höheren Programmiersprache, so hampelt man auch bei Java nicht mehr direkt auf den Speicherblöcken des
-Rechners rum, sondern hat eine Abstraktion, welche einem die Arbeit erleichert. Damit nun aber die einzelnen Bytes richtig
+Wie bei jeder anderen höheren Programmiersprache, so hampelt man auch bei Java nicht mehr direkt auf den Speicherblöcken des
+Rechners herum, sondern hat eine Abstraktion, welche einem die Arbeit erleichert. Damit nun aber die einzelnen Bytes richtig
 interpretiert werden können, benötigen wir Typen und ein Typsystem.
 
 == Primitive und Literale
@@ -99,7 +99,7 @@ nicht zu vereinen.
 
 === Void
 
-Anders als `null` findet man das Wort `void` oft als Rückgabewerten von Methoden vor. Und auch nur dort kann es
+Anders als `null` findet man das Wort `void` oft als Rückgabewerten von Methoden vor und auch nur dort kann es
 der Syntax her eingesetzt werden. Allerdings haben hier die Javaentwickler daneben eine `Void`-Klasse eingeführt
 mit der etwas unbefriedigenden Beschreibung:
 
@@ -107,4 +107,19 @@ mit der etwas unbefriedigenden Beschreibung:
   reference to the {@code Class} object representing the Java keyword
   void.
 
-Und tatsächlich
+Und tatsächlich lässt sich der Typ z.B. als Generic benutzen, wobei als "Wert" sich hier nur `null` übergeben lässt.
+Generell lässt sich von `Void` keine Instanz erzeugen, da es einen privaten Konstruktor besitzt. Ein Singletonobjekt
+existiert nicht.
+
+[source,java]
+----
+include::{sourcedir}/deepdive/typesystem/NullAndVoid.java[tags=void_as_generic]
+----
+
+Wenn man jetzt meint, das `Void` und `void` sich wie `Integer` und `int` verhalten, der wird leider enttäuscht.
+`Void` kann nicht `void` sein. Dafür aber `null`, und nur `null`
+
+[source,java]
+----
+include::{sourcedir}/deepdive/typesystem/NullAndVoid.java[tags=void_type]
+----

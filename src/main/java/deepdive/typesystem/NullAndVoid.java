@@ -31,26 +31,17 @@ public class NullAndVoid {
 
     /*
     // tag::void_type[]
-    Void vv = void;
+    Void vv = void;     // <-- Won't work
+    Void v = null;      // <-- `Void` can be `null`, but not `void`. 🤔
     // end::void_type[]
     */
 
-    // tag::void_can_be_null[]
-    Void v = null;
-    // end::void_can_be_null[]
-
-    Function<Supplier<String>, String> bar = Supplier::get;
-
-    Supplier<Void> foo = () -> {
-        throw new RuntimeException();
-    };
 
     {
-        Map<String, Void> m = new HashMap<>();
-        m.put("Hallo", new Object());
-        //bar.apply(foo);
+    // tag::void_as_generic[]
+    Map<String, Void> m = new HashMap<>();
+    m.put("Hallo", null);
+    // end::void_as_generic[]
     }
-
-
 
 }
