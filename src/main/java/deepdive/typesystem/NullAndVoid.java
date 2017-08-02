@@ -42,6 +42,15 @@ public class NullAndVoid {
     Map<String, Void> m = new HashMap<>();
     m.put("Hallo", null);
     // end::void_as_generic[]
+
+
     }
+
+    /*
+    // tag::void_is_an_object[]
+    Void v = new Void()
+    v instanceof Object     <-- true
+    // end::void_is_an_object[]
+    */
 
 }

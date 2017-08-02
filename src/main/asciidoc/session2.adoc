@@ -116,10 +116,20 @@ existiert nicht.
 include::{sourcedir}/deepdive/typesystem/NullAndVoid.java[tags=void_as_generic]
 ----
 
-Wenn man jetzt meint, das `Void` und `void` sich wie `Integer` und `int` verhalten, der wird leider enttäuscht.
-`Void` kann nicht `void` sein. Dafür aber `null`, und nur `null`.
+Wer nun aber vermutet, dass `Void` und `void` sich wie `Integer` und `int` verhalten, der wird leider enttäuscht.
+`Void` kann nicht `void` sein. Dafür aber `null`. Klingt komisch...  ;-)
 
 [source,java]
 ----
 include::{sourcedir}/deepdive/typesystem/NullAndVoid.java[tags=void_type]
+----
+
+Aus Sicht des Typsystems können wir also abschließend sagen, dass weder `void` noch `null` wirklich Mitglieder in diesem
+System sind. Einzig die Klasse `Void` ist Bestandteil des Typsystems, auch wenn sie in Java nicht instantiiert werden kann
+und keinen Bezug zu seinem Namensvetter `void` hat. Ein Beispiel aus Groovy, welches sich nicht um private Konstruktoren
+schert, zeigt, dass auch ein `Void` ein `Object` ist.
+
+[source,groovy]
+----
+include::{sourcedir}/deepdive/typesystem/NullAndVoid.java[tags=void_is_an_object]
 ----
