@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Generics {
 
+    // tag::generics_in_use[]
     /**
      * The use of argument types in other classes.
      * As an example, the List types.
@@ -24,8 +25,10 @@ public class Generics {
         objectList.addAll(stringList);
         objectList.addAll(intList);
     }
+    // end::generics_in_use[]
 
 
+    // tag::typed_class[]
     /**
      * We can also use type arguments in an extend statement.
      * Here, we define a static typed integer list.
@@ -38,8 +41,10 @@ public class Generics {
         intList.add(1);
         // intList.add("hallo");    <-- Won't work
     }
+    // end::typed_class[]
 
 
+    // tag::generic_class[]
     /**
      * To make a generic class, we can define type arguments to the class definition.
      * The `E` is just a placeholder. It can be every string like every other variable.
@@ -56,18 +61,21 @@ public class Generics {
 
     }
 
+
     void useOfElementAdder() {
         ElementAdder<String> stringAdder = new ElementAdder<>();
-        stringAdder.addElement(new ArrayList<>(), "hallo Welt");
+        List<String> strList = stringAdder.addElement(new ArrayList<>(), "hallo Welt");
 
         ElementAdder<Double> doubleAdder = new ElementAdder<>();
-        doubleAdder.addElement(new ArrayList<>(), 42d);
+        List<Double> doubleList = doubleAdder.addElement(new ArrayList<>(), 42d);
     }
+    // end::generic_class[]
 
 
+    // tag::typed_methods[]
     /**
      * We can also define typed methods. So the type argument is not related to the class scope, but only to
-     * the method scope. The type parameter
+     * the method scope.
      */
     static class TypedMethods {
 
@@ -95,6 +103,10 @@ public class Generics {
     void useTypedMethods() {
         TypedMethods typedMethods = new TypedMethods();
 
+        // Type parameter on method invocation.
+        final List<Integer> integers = typedMethods.<IntegerList>create(IntegerList.class);
+
+        // Usage of typed methods, with interfered type information.
         List<Integer> intList = new ArrayList<>();
         List<String> stringList = new ArrayList<>();
 
@@ -105,8 +117,6 @@ public class Generics {
 
         stringList = typedMethods.addElement(stringList, "Hallo Welt");
         String s = typedMethods.getFirstElement(stringList);
-
-        // Type parameter on method invocation.
-        final List<Integer> integers = typedMethods.<IntegerList>create(IntegerList.class);
     }
+    // end::typed_methods[]
 }
