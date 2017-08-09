@@ -7,23 +7,38 @@ import java.util.List;
 
 public class Generics {
 
-    // tag::generics_in_use[]
+    // tag::old_lists[]
+    String oldLists() {
+        List myList = new ArrayList();
+
+        myList.add("Hallo Welt");
+        myList.add(42);
+        myList.add(new Object());
+
+        return (String) myList.get(0);  // <-- is it a String???
+    }
+    // end::old_lists[]
+
     /**
      * The use of argument types in other classes.
      * As an example, the List types.
      */
     void typeArgumentedTypes() {
+        // tag::generics_in_use[]
         List<String> stringList = new ArrayList<>();
         List<Integer> intList = new ArrayList<>();
 
         // stringList = intList;        <-- not possible
         // stringList.addAll(intList);  <-- also not possible
+        // end::generics_in_use[]
+
+
+        // tag::generic_type_not_polymorphic[]
 
         List<Object> objectList = new ArrayList<>();
         // objectList = stringList;     <-- not possible
 
-        objectList.addAll(stringList);
-        objectList.addAll(intList);
+        // end::generic_type_not_polymorphic[]
     }
     // end::generics_in_use[]
 

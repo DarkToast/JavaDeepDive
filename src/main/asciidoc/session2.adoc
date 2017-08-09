@@ -135,8 +135,45 @@ include::{sourcedir}/deepdive/typesystem/NullAndVoid.java[tags=void_is_an_object
 ----
 
 == Generics oder parametrische Polymorphie
+Bis Java 5 war die Collections-API sehr generisch und lediglich auf `Object` beschränkt. Eine Liste konnte also faktisch
+alle Objekte aufnehmen, die irgendwie von `Object` abgeleiten haben.
+Wollte man Objekte aus einer Liste lesen, musste man immer einen expliziten Typecast vollziehen. Was bei unbekannten
+Listen gerne auch mal in einer ClassCastException endete:
+
+[source,groovy]
+----
+include::{sourcedir}/deepdive/typesystem/Generics.java[tags=old_lists]
+----
+
+Um diesem Problem zu begegnen, führte Sun 2004 unter der Leitung von Martin Odersky (Der Typ, der Scala erfunden hat ;-) )
+mit der Version 5 die "Java Generics" ein. Der bis dahin größte Umbau im Java Typsystem.
+
+Typen können seitdem zu "generischen" oder "parametrisch polymorphen" Typen avan­cie­ren indem sie selbst noch einmal
+einen weiteren Typ als Parameter annehmen können.
 
 === type arguments
+Als Beispiel soll hier der Typ `List` dienen. Im folgenden Beispiel erzeugen wir zwei Referenzen von `List` die jeweils
+einen anderen Parametertyp enthalten. `String` und `Integer`. Gelesen als `List of String`.
+
+[source,groovy]
+----
+include::{sourcedir}/deepdive/typesystem/Generics.java[tags=generics_in_use]
+----
+
+Das es sich dabei nun um zwei komplett verschiedene Typen handelt, können wir die Referenzen auch nicht kombinieren. Eine
+`List<String>` ist eben keine `List<Integer>`.
+
+Denn auch wenn die Parametertypen von zwei Referenzen in einer gemeinsamen Hierachie existieren, so sind es die
+daraus entstandenen parametrisierten Typen nicht.
+
+[source,groovy]
+----
+include::{sourcedir}/deepdive/typesystem/Generics.java[tags=generic_type_not_polymorphic]
+----
+
+Eine `List<String>` ist keine `List<Object>`, obwohl ein `String` ein `Object` ist! Das trotzdem eine Hierarchie
+in den generischen Typen existiert und wie diese aussieht, wird später behandelt.
+
 
 === typed classes
 
