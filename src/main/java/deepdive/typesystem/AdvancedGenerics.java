@@ -1,5 +1,8 @@
 package deepdive.typesystem;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +19,10 @@ public class AdvancedGenerics {
 
     }
 
-
+    // tag::substitutability[]
+    /**
+     * The Liskov substitution principle
+     */
     static class A {
         List invariant(List l) {
             return l;
@@ -44,7 +50,10 @@ public class AdvancedGenerics {
         void contravariant(List l) {
         }
     }
+    // end::substitutability[]
 
+
+    // tag::bounded_types[]
     /**
      * Covariant bounded type
      * @param <T>
@@ -65,9 +74,13 @@ public class AdvancedGenerics {
             // c.covariant(new ArrayList<>());  <-- compile error
         }
     }
+    // end::bounded_types[]
 
 
+    // tag::bounded_wildcards[]
     /**
+     * B --> A --> Object
+     *
      * Covariant lower bounded wildcards in methods.
      */
     abstract static class D {
@@ -111,4 +124,54 @@ public class AdvancedGenerics {
             unbounded(new ArrayList<String>());
         }
     }
+    // end::bounded_wildcards[]
+
+
+    // tag::recursive_types_simple[]
+    /**
+     * Recursive generic types. A simple example without recursion.
+     *
+     * @param <T>
+     */
+    interface FromJsonSimple<T> {
+        default T fromJson(Class<T> clazz, final String json) {
+            try {
+                return new ObjectMapper().reader().forType(clazz).readValue(json);
+            } catch (IOException e) {
+                return null;
+            }
+        }
+    }
+
+    static class JsonUsageSimple implements FromJsonSimple<List> {
+        List usage() {
+            return this.fromJson(List.class, "[]");    // Why should FromJsonSimple allow to extended by the JsonUsageSimple type as List-typed?
+        }
+    }
+    // end::recursive_types_simple[]
+
+
+    // tag::recursive_types[]
+    /**
+     * Recursive generic types. A recursive typed interface, which only allows to be typed with the implementing type.
+     *
+     * @param <T>
+     */
+    interface FromJson<T extends FromJson<T>> {
+        default T fromJson(Class<T> clazz, final String json) {
+            try {
+                return new ObjectMapper().reader().forType(clazz).readValue(json);
+            } catch (IOException e) {
+                return null;
+            }
+        }
+    }
+
+    static class JsonUsage implements FromJson<JsonUsage> { // <-- Only JsonUsage is allowed here.
+        JsonUsage usage() {
+            return this.fromJson(JsonUsage.class, "[]");    // Why should FromJsonSimple allow to extended by the JsonUsage type as List-typed?
+        }
+    }
+    // tag::recursive_types[]
+
 }
