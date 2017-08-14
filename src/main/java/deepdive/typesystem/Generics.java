@@ -40,14 +40,12 @@ public class Generics {
 
         // end::generic_type_not_polymorphic[]
     }
-    // end::generics_in_use[]
 
-
-    // tag::typed_class[]
     /**
      * We can also use type arguments in an extend statement.
      * Here, we define a static typed integer list.
      */
+    // tag::typed_class[]
     static class IntegerList extends ArrayList<Integer> {
     }
 
@@ -59,7 +57,6 @@ public class Generics {
     // end::typed_class[]
 
 
-    // tag::generic_class[]
     /**
      * To make a generic class, we can define type arguments to the class definition.
      * The `E` is just a placeholder. It can be every string like every other variable.
@@ -67,13 +64,12 @@ public class Generics {
      *
      * @param <E>
      */
+    // tag::generic_class[]
     static class ElementAdder<E> {
-
         List<E> addElement(List<E> list, E element) {
             list.add(element);
             return list;
         }
-
     }
 
 

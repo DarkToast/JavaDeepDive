@@ -155,7 +155,7 @@ einen weiteren Typ als Parameter annehmen können.
 Als Beispiel soll hier der Typ `List` dienen. Im folgenden Beispiel erzeugen wir zwei Referenzen von `List` die jeweils
 einen anderen Parametertyp enthalten. `String` und `Integer`. Gelesen als `List of String`.
 
-[source,groovy]
+[source,java]
 ----
 include::{sourcedir}/deepdive/typesystem/Generics.java[tags=generics_in_use]
 ----
@@ -166,7 +166,7 @@ Das es sich dabei nun um zwei komplett verschiedene Typen handelt, können wir d
 Denn auch wenn die Parametertypen von zwei Referenzen in einer gemeinsamen Hierachie existieren, so sind es die
 daraus entstandenen parametrisierten Typen nicht.
 
-[source,groovy]
+[source,java]
 ----
 include::{sourcedir}/deepdive/typesystem/Generics.java[tags=generic_type_not_polymorphic]
 ----
@@ -176,6 +176,39 @@ in den generischen Typen existiert und wie diese aussieht, wird später behandel
 
 
 === typed classes
+
+Typparameter sind nicht nur auf Referenzen beschränkt, sondern durchziehen das gesamte Typsystem von Java. Im folgende
+Beispiel erzeugen wir eine starre Integer-Liste, indem von `ArrayList` geerbt wird und dieser Typ dabei mit `Integer`
+parametrisiert wird.
+
+[source,java]
+----
+include::{sourcedir}/deepdive/typesystem/Generics.java[tags=typed_class]
+----
+
+=== generic classes
+
+Um nun eine eigene generische Klasse zu schreiben, bedarf es lediglich eines Typparameters, direkt hinter unserem
+Typbezeichner. Wie im unteren Beispiel gezeit, bauen wir uns einen `ElementAdder`, der einen Typparameter vom Namen
+`E` mitbringt, der den Typ unserer Elemente darstellen soll.
+
+Diesen Typparameter können wir nun, wie jeden anderen Typ für Parameter, Rückgabewerte oder auch wieder als
+Typparameter in anderen generischen Klassen einsetzen. Im Beispiel sehen wir die Methode `addElement`, welche
+als Parameter eine List of `E` und ein Element des Typs `E` übergeben bekommt und wiederum eine List of `E`
+zurück gibt.
+
+
+[source,java]
+----
+include::{sourcedir}/deepdive/typesystem/Generics.java[tags=generic_class]
+----
+
+Möchten wir nun unsere Klasse benutzen, so tun wir dies wie in den anderen Beispielen, indem wir bei der Instanziierung
+einen Typ als Paramter mitgeben, der dann unseren Parameter `E` ersetzt.
+
+Im ersten Beispiel, erzeugen wir uns einen String Adder. Dieser kann Listen of `String` weitere `String` s hinzufügen.
+Die zweite Instanz wiederum ist ein Double Adder. Dieser Adder kann Listen of `Double` weitere `Double` Elemente
+hinzufügen.
 
 === typed methods
 
