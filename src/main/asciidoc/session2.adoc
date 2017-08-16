@@ -243,6 +243,11 @@ erste Parameter der Methode eine `List<E>` ist, wir der Methode ein `List<Intege
 
 === static types vs. dynamic types
 
+Nachdem wir uns nun die generischen Typen in Java angesehen haben, tauchen wir wieder ein wenig tiefer in die JVM ein
+und schauen uns an, wie die Typparameter auf Bytecodeebend behandelt werden. Hier entdecken wir direkt einen Unterschied zwischen der Compilezeit und der Laufzeit des fertigen Bytecodes.
+
+
+
 === type erasure
 [source,java]
 ----
