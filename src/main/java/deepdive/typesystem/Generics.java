@@ -1,5 +1,6 @@
 package deepdive.typesystem;
 
+import javax.swing.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -83,27 +84,40 @@ public class Generics {
     // end::generic_class[]
 
 
-    // tag::typed_methods[]
     /**
      * We can also define typed methods. So the type argument is not related to the class scope, but only to
      * the method scope.
      */
+    // tag::typed_methods[]
     static class TypedMethods {
-
         <E> List<E> addElement(List<E> list, E element) {
             list.add(element);
             return list;
         }
+    }
+    // end::typed_methods[]
 
-        <F> F getFirstElement(List<F> list) {
-            return list.get(0);
-        }
 
-        @SuppressWarnings("unchecked")
-        <G> G create(Class clazz) {
+    void useTypedMethods() {
+        // tag::typed_methods_usage[]
+        TypedMethods typedMethods = new TypedMethods();
+
+        // Usage of typed methods, with explicit type information.
+        List stringList = new ArrayList<String>();
+        stringList = typedMethods.<String>addElement(stringList, "Hallo Welt");
+
+        // Usage of typed methods, with interfered type information.
+        List<Integer> intList = new ArrayList<>();
+        intList = typedMethods.addElement(intList, 42);
+        // end::typed_methods_usage[]
+    }
+
+
+    static class TypedMethodsExtended {
+        <G> G create(Class<G> clazz) {
             try {
-                Constructor<?> ctor = clazz.getConstructor();
-                return (G) ctor.newInstance();
+                Constructor<G> ctor = clazz.getConstructor();
+                return ctor.newInstance();
             } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
                 e.printStackTrace();
                 return null;
@@ -111,23 +125,11 @@ public class Generics {
         }
     }
 
-    void useTypedMethods() {
-        TypedMethods typedMethods = new TypedMethods();
+    void useTypedMethodsExtended() {
+        TypedMethodsExtended typedMethods = new TypedMethodsExtended();
 
         // Type parameter on method invocation.
-        final List<Integer> integers = typedMethods.<IntegerList>create(IntegerList.class);
-
-        // Usage of typed methods, with interfered type information.
-        List<Integer> intList = new ArrayList<>();
-        List<String> stringList = new ArrayList<>();
-
-
-        intList = typedMethods.addElement(intList, 42);
-        int i = typedMethods.getFirstElement(intList);
-
-
-        stringList = typedMethods.addElement(stringList, "Hallo Welt");
-        String s = typedMethods.getFirstElement(stringList);
+        final List<Integer> integers = typedMethods.create(IntegerList.class);
+        final JDialog dialog = typedMethods.create(JDialog.class);
     }
-    // end::typed_methods[]
 }

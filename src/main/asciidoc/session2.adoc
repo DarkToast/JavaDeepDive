@@ -189,10 +189,10 @@ include::{sourcedir}/deepdive/typesystem/Generics.java[tags=typed_class]
 === generic classes
 
 Um nun eine eigene generische Klasse zu schreiben, bedarf es lediglich eines Typparameters, direkt hinter unserem
-Typbezeichner. Wie im unteren Beispiel gezeit, bauen wir uns einen `ElementAdder`, der einen Typparameter vom Namen
-`E` mitbringt, der den Typ unserer Elemente darstellen soll.
+Typbezeichner. Wie im unteren Beispiel gezeigt, bauen wir uns einen `ElementAdder`, der einen Typparameter vom Namen
+`E` mitbringt, welcher den Typ unserer Elemente darstellen soll.
 
-Diesen Typparameter können wir nun, wie jeden anderen Typ für Parameter, Rückgabewerte oder auch wieder als
+Diesen Typparameter können wir nun, wie jeden anderen Typ als Parameter, Rückgabewerte oder auch wieder als
 Typparameter in anderen generischen Klassen einsetzen. Im Beispiel sehen wir die Methode `addElement`, welche
 als Parameter eine List of `E` und ein Element des Typs `E` übergeben bekommt und wiederum eine List of `E`
 zurück gibt.
@@ -211,6 +211,27 @@ Die zweite Instanz wiederum ist ein Double Adder. Dieser Adder kann Listen of `D
 hinzufügen.
 
 === typed methods
+
+Genrics sind nicht nur Klassen vorbehalten. Man kann in Java auch generische Methoden erzeugen. Also Methode, die
+beim Aufruf einen Typbezeichner erhalten, den sie in ihrer internen Logik benutzen sollen.
+
+Im folgenden Beispiel haben wir eine klassiche Klasse, welche aber  zwei generische Methoden beinhaltet. Den generischen
+Typ einer Methode findet man noch vor dem Rückgabetyp in spitzen Klammern stehen. Im Fall von `addElement` sehen
+wir den Typparameter `E`, der sich als Parameter des RÜckgabetyps findet, wie auch in den Parametern.
+
+[source,java]
+----
+include::{sourcedir}/deepdive/typesystem/Generics.java[tags=typed_methods]
+----
+
+Möchte man die Methoden nutzen, so übergibt man den Paramtertypen entweder explizit vor dem eigentlichen Methodennamen:
+``
+
+[source,java]
+----
+include::{sourcedir}/deepdive/typesystem/Generics.java[tags=typed_methods_usage]
+----
+
 
 === static types vs. dynamic types
 
