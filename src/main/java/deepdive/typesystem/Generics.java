@@ -88,29 +88,32 @@ public class Generics {
      * We can also define typed methods. So the type argument is not related to the class scope, but only to
      * the method scope.
      */
-    // tag::typed_methods[]
     static class TypedMethods {
+        // tag::typed_methods[]
         <E> List<E> addElement(List<E> list, E element) {
             list.add(element);
             return list;
         }
+        // end::typed_methods[]
+
+
+
+        void useTypedMethods() {
+            TypedMethods typedMethods = new TypedMethods();
+
+            // tag::typed_methods_usage[]
+            // Usage of typed methods, with explicit type information.
+            List stringList = new ArrayList<String>();
+            stringList = this.<String>addElement(stringList, "Hallo Welt");
+
+            // Usage of typed methods, with type inference information.
+            List<Integer> intList = new ArrayList<>();
+            intList = typedMethods.addElement(intList, 42);
+            // end::typed_methods_usage[]
+        }
     }
-    // end::typed_methods[]
 
 
-    void useTypedMethods() {
-        // tag::typed_methods_usage[]
-        TypedMethods typedMethods = new TypedMethods();
-
-        // Usage of typed methods, with explicit type information.
-        List stringList = new ArrayList<String>();
-        stringList = typedMethods.<String>addElement(stringList, "Hallo Welt");
-
-        // Usage of typed methods, with interfered type information.
-        List<Integer> intList = new ArrayList<>();
-        intList = typedMethods.addElement(intList, 42);
-        // end::typed_methods_usage[]
-    }
 
 
     static class TypedMethodsExtended {

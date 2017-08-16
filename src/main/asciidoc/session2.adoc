@@ -212,12 +212,12 @@ hinzufügen.
 
 === typed methods
 
-Genrics sind nicht nur Klassen vorbehalten. Man kann in Java auch generische Methoden erzeugen. Also Methode, die
-beim Aufruf einen Typbezeichner erhalten, den sie in ihrer internen Logik benutzen sollen.
+Generics sind nicht nur Klassen vorbehalten. Man kann in Java auch generische Methoden erzeugen. Also Methoden, die
+erst beim Aufruf einen Typbezeichner erhalten, den sie in ihrer internen Logik benutzen sollen.
 
-Im folgenden Beispiel haben wir eine klassiche Klasse, welche aber  zwei generische Methoden beinhaltet. Den generischen
-Typ einer Methode findet man noch vor dem Rückgabetyp in spitzen Klammern stehen. Im Fall von `addElement` sehen
-wir den Typparameter `E`, der sich als Parameter des RÜckgabetyps findet, wie auch in den Parametern.
+Im folgenden Beispiel haben wir so eine generische Methoden. Den generischen Typ einer Methode findet man noch vor
+dem Rückgabetyp in spitzen Klammern. `addElement` erhält den Typparameter `E`, der sich als Parameter des Rückgabetyps
+findet, wie auch in den Parametern.
 
 [source,java]
 ----
@@ -225,12 +225,20 @@ include::{sourcedir}/deepdive/typesystem/Generics.java[tags=typed_methods]
 ----
 
 Möchte man die Methoden nutzen, so übergibt man den Paramtertypen entweder explizit vor dem eigentlichen Methodennamen:
-``
+`this.<String>addElement(stringList, "Hallo Welt");`. Mit dem Aufruf können wir `addElement` nun dazu bringen, einer
+`List<String>` einen neuen `String` zuzuweisen und die Liste als `List<String>` wieder zurückzugeben.
 
 [source,java]
 ----
 include::{sourcedir}/deepdive/typesystem/Generics.java[tags=typed_methods_usage]
 ----
+
+Damit wir nicht jedes mal den Typ explizit setzen müssen, bietet Java einen type inference Mechanismus an, wodurch
+der Compiler den Parametertyp anhand der übergebenen Werte oder der Zielvariable des Rückgabewerts ermittelt.
+
+Im oberen Beispiel ermittelt der Compiler den Wert des Typparameters `E` anhand der übergebenen Werte. Wenn also der
+erste Parameter der Methode eine `List<E>` ist, wir der Methode ein `List<Integer>` geben, so ermittelt der Compiler für
+`E` sofort den Typ `Integer`.
 
 
 === static types vs. dynamic types
