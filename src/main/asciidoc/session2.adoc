@@ -134,7 +134,7 @@ schert, zeigt, dass auch ein `Void` ein `Object` ist.
 include::{sourcedir}/deepdive/typesystem/NullAndVoid.java[tags=void_is_an_object]
 ----
 
-== Generics oder parametrische Polymorphie
+== Generics, oder parametrische Polymorphie
 Bis Java 5 war die Collections-API sehr generisch und lediglich auf `Object` beschränkt. Eine Liste konnte also faktisch
 alle Objekte aufnehmen, die irgendwie von `Object` abgeleiten haben.
 Wollte man Objekte aus einer Liste lesen, musste man immer einen expliziten Typecast vollziehen. Was bei unbekannten
@@ -241,18 +241,33 @@ erste Parameter der Methode eine `List<E>` ist, wir der Methode ein `List<Intege
 `E` sofort den Typ `Integer`.
 
 
-=== static types vs. dynamic types
+== Advanced Generics
 
-Nachdem wir uns nun die generischen Typen in Java angesehen haben, tauchen wir wieder ein wenig tiefer in die JVM ein
-und schauen uns an, wie die Typparameter auf Bytecodeebend behandelt werden. Hier entdecken wir direkt einen Unterschied zwischen der Compilezeit und der Laufzeit des fertigen Bytecodes.
+Nachdem wir uns nun die generic types in Java angesehen haben, tauchen wir wieder ein wenig tiefer in die JVM ein
+und schauen uns an, wie die Typparameter auf Bytecodeebend behandelt werden. Hier entdecken wir direkt einen Unterschied
+zwischen der Compilezeit und der Laufzeit des fertigen Bytecodes.
 
+=== statische und dynamische Typen
 
+Um das Verhalten der Generics in der JVM besser verstehen zu können, 
 
 === type erasure
+
+Generic types wurden als Erweiterung für den Compiler eingeführt, um eine verbesserte Typüberprüfung im Code
+zu ermöglichen und somit vor allem Fehler beim Entwickeln zu vermeiden.
+Generics waren daher von jeher eine reine Erweiterung des Compiler, weniger der JVM und beeinflussen den
+aus Java generierten Bytecode nur sehr wenig.
+
+
+
+Tatsächlich werden alle Informationen über parametrisierte Typen aus dem Bytecode entfernt. Dieses Vorgehen nennt sich
+`type erasure`
+
 [source,java]
 ----
 include::{sourcedir}/deepdive/typesystem/TypeErasure.java[tags=type_erasure]
 ----
+
      -- javap -c TypeErasure
      void typeErasure();
          Code:
@@ -266,9 +281,21 @@ include::{sourcedir}/deepdive/typesystem/TypeErasure.java[tags=type_erasure]
            15: astore_2
            16: return
 
+
+=== Non-Reifiable Types
+
+
+
+
+
+
 === Advanced
     src/main/java/deepdive/typesystem/AdvancesGenerics.java:10: error: incompatible types: List<String> cannot be converted to List<Object>
             List<Object> objList = strList;
 
+
+
 ==== Liskovsche Substitutionsprinzip
 http://www.nils-haldenwang.de/german/das-liskovsche-substitutionsprinzip-in-java-invarianz-kovarianz-kontravarianz
+
+==== Wildcard

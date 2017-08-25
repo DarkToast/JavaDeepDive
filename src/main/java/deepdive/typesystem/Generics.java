@@ -90,10 +90,12 @@ public class Generics {
      */
     static class TypedMethods {
         // tag::typed_methods[]
+
         <E> List<E> addElement(List<E> list, E element) {
             list.add(element);
             return list;
         }
+
         // end::typed_methods[]
 
 
@@ -102,13 +104,16 @@ public class Generics {
             TypedMethods typedMethods = new TypedMethods();
 
             // tag::typed_methods_usage[]
+
             // Usage of typed methods, with explicit type information.
             List stringList = new ArrayList<String>();
             stringList = this.<String>addElement(stringList, "Hallo Welt");
 
+
             // Usage of typed methods, with type inference information.
             List<Integer> intList = new ArrayList<>();
             intList = typedMethods.addElement(intList, 42);
+
             // end::typed_methods_usage[]
         }
     }
