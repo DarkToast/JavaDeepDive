@@ -249,27 +249,63 @@ zwischen der Compilezeit und der Laufzeit des fertigen Bytecodes.
 
 === statische und dynamische Typen
 
-Um das Verhalten der Generics in der JVM besser verstehen zu können, 
+Um das Verhalten von Generics in der JVM besser verstehen zu können, wollen wir uns zunächst die Unterscheidung
+zwischen statischen und dynamischen Typen anschauen.
+
+Kurz: Statische Typen sind diese, die beim Kopiliervorgang als Typ z.B. einer Referenz vom Compiler erkannt und interpretiert werden.
+Dynamische Typen sind die eigentlichen Typen, welche später zur Laufzeit die Objekte annehmen, welche aber nicht unbedingt dem
+statischen Typ ihrer Referenz entsprechen müssen.
+
+Beispiel:
+
+Wir definieren uns eine Referenz `aList` vom Typ `List` und weisen ihr ein neues Objekt vom Typ `ArrayList` zu.
+Der Compiler sagt uns nun, dass die Referenz immer vom Typ `List` ist, auch wenn wir ihr eine neue `LinkedList` zuweisen.
+Somit können wir auf Sprachebene Effekte wie Polymorphismus, etc. benutzen. `List` bezeichnen wir hier als statischen Typ.
+
+[source,java]
+----
+include::{sourcedir}/deepdive/typesystem/TypeErasure.java[tags=dynamic_static_types]
+----
+
+Während der Laufzeit ändert sich diese Typen allerdings. Die Refrenz ist innerhalb der JVM nichts weiter, als benamter
+Speicher, der in sich keinem Typ zugewiesen ist. Nur das Objekt, aus welches die Referenz zeigt besitzt einen Typ.
+Für die Referenz sprechen wir daher von einem _dynamischen Typ_.
+
+Mit diesem Prinzip sind in Groovy dann zum Beispiel solche Konstrukte möglich:
+
+[source,groovy]
+----
+  def i = 0
+  i = "Hallo Welt"
+  i = new LinkedList()
+----
 
 === type erasure
 
-Generic types wurden als Erweiterung für den Compiler eingeführt, um eine verbesserte Typüberprüfung im Code
+Generic types wurden als Erweiterung für den Java Compiler eingeführt, um eine verbesserte Typüberprüfung im Code
 zu ermöglichen und somit vor allem Fehler beim Entwickeln zu vermeiden.
 Generics waren daher von jeher eine reine Erweiterung des Compiler, weniger der JVM und beeinflussen den
 aus Java generierten Bytecode nur sehr wenig.
 
+Tatsächlich werden alle Informationen über parametrisierte Typen beim Kompilieren aus dem Bytecode entfernt. Dieses
+Vorgehen nennt sich `type erasure`.
 
-
-Tatsächlich werden alle Informationen über parametrisierte Typen aus dem Bytecode entfernt. Dieses Vorgehen nennt sich
-`type erasure`
-
+Beispiel:
 [source,java]
 ----
 include::{sourcedir}/deepdive/typesystem/TypeErasure.java[tags=type_erasure]
 ----
 
+Im oberen Beispiel sehen wir, wie die Typparameter zur Compile- und zur Laufzeit aussehen. Hier erkennen wir auch direkt
+wieder das Prinzip der statischen und dynamischen Typen. Während ein `new ArrayList<String>` zur Compilezeit noch den
+Typparameter `String` behält, verhält sich der Typ zur Laufzeit wie ein `ArrayList<Object>`.
+
+Schauen wir uns einmal ein Dekompilat der ersten Methode an, so erkennen wir, dass die ArrayList-Objekte ohne
+Typparameter auskommen und im übrigen die `astore`-Anweisungen, welche die Referenzen einer lokalen Variable
+zuweisen, diese ebenfalls keine Typen mehr beherbergen.
+
      -- javap -c TypeErasure
-     void typeErasure();
+     void typeErasureStatic();
          Code:
             0: new           #5                  // class java/util/ArrayList
             3: dup
@@ -282,8 +318,30 @@ include::{sourcedir}/deepdive/typesystem/TypeErasure.java[tags=type_erasure]
            16: return
 
 
-=== Non-Reifiable Types
+==== Achtung Stolperfalle!
 
+Im folgenden Beispiel sehen wir, wie sich type erasure auf den Programmfluss auswirken kann. Wir nehmen an,
+`doSomethingWithAListAndAnObject` wäre eine alte Library aus der Zeit vor Java 1.5. Durch einen unglücklichen Zufall
+landet die `List<String>` an einer Codestelle, wo ebendieser Methode die Liste und ein `new Object()` übergeben wird.
+
+[source,java]
+----
+include::{sourcedir}/deepdive/typesystem/TypeErasure.java[tags=type_erasure_pitfall]
+----
+
+Die Methode ist dabei leider seiteneffektbehaftet und ändert sie in-place, indem sie der `List`-Referenz das Objekt
+zuweist. Für die Methode ist die übergebene Liste eben nur ein `List<Object>`.
+
+Verwenden wir dann die `List<String>` wieder an der ursprünglichen Stelle und wollen sie auslesen, kommt es beim Zugriff
+auf das 1ste Element zu einer `TypeCastException`, Der Compiler kennt geht an der Stelle durch die statische
+Typisierung von einem `String` aus, es handelt sich aber in Wirklichkeit um ein `Object`!
+
+
+
+=== Reifiable Types
+
+Ganz zu Anfang haben wir `Array` als einzigen Primitivtyp identifiziert, der eine Collection für andere Typen darstellt.
+Zum Beispiel `String[] stringArray = new String[]`.
 
 
 

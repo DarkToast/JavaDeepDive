@@ -9,16 +9,6 @@ import java.util.List;
 
 public class AdvancedGenerics {
 
-    public static void main(String[] args) {
-
-        List<String> strList = new ArrayList<>();
-//        List<Object> objList = strList;
-
-        // List<String> is not a subtype of List<Object>, even
-        // String is a subtype of Object.
-
-    }
-
     // tag::substitutability[]
     /**
      * The Liskov substitution principle
