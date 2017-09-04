@@ -48,7 +48,7 @@ include::{sourcedir}/deepdive/typesystem/Primitives.java[tags=autoboxing_strange
 == Klassen
 Hier wird es objektorientiert.
 
-Der Kern des Java Typsystems besteht aus Klassen und Objekten und die Abhängigkeiten und Hierarchieren dazwischen. Als
+Der Kern des Java Typsystems besteht aus Klassen und Objekten und die Beziehungen und Hierarchien dazwischen. Als
 Basis gilt die von allen Klassen abgeleitete Oberklasse `Object`. Ein allen Klassen gemeinsamer Bottomtype existiert nicht.
 
 [source,java]
@@ -56,7 +56,7 @@ Basis gilt die von allen Klassen abgeleitete Oberklasse `Object`. Ein allen Klas
 include::{sourcedir}/deepdive/typesystem/Classes.java[tags=classes]
 ----
 
-Hier sehen wir auch direkt wieder eine Besonderheit bei den Literalen. Ein Stringliteral ist immer vom Typ `String`, ist
+Hier sehen wir auch direkt wieder eine Besonderheit bei den Literalen. Ein Stringliteral ist immer vom Typ `String`,
 also ein Objekt. So ist denn auch folgender Ausdruck valide `"Hallo".toString()` und auch das vorangegangene Beispiel
 klappt mit einem Stringliteral `"Hallo" instanceof Object`.
 
@@ -74,7 +74,7 @@ keinen Wert besitzt. Leider war das eine nicht ganz durchdachte Entscheidung der
 Zeilen `if(o != null)` sind somit entstanden. Modernere Konzepte wie `Optional`-Monaden oder Kotlins `nullable`-Types versuchen
 diesem Problem Herr zu werden.
 
-Was ist nun `null` eigentlich? Betrachtet man `null` vom Typsystem aus, so fragt man sich, welchen Platz `null` darin einnimmt.
+Aber was ist nun `null` eigentlich? Betrachtet man `null` vom Typsystem aus, so fragt man sich, welchen Platz `null` darin einnimmt.
 Eine `0` ist ja eine Zahl wie `1` oder `2`. Eine leere Menge `{}` ist genauso eine Menge wie `{'Apfel', 'Birne'}` und alle
 Operationen aus ihrem jeweiligen System lassen sich auf sie anwenden. `0 + 1` ist ebenso valide wie `{} ∪ {'Apfel'}`.
 
@@ -99,7 +99,7 @@ nicht zu vereinen.
 
 === Void
 
-Anders als `null` findet man das Wort `void` oft als Rückgabewerten von Methoden vor und auch nur dort kann es
+Anders als `null` findet man das Wort `void` oft als Rückgabetypen von Methoden vor und auch nur dort kann es
 der Syntax her eingesetzt werden. Allerdings haben hier die Javaentwickler daneben eine `Void`-Klasse eingeführt
 mit der etwas unbefriedigenden Beschreibung:
 
@@ -136,7 +136,7 @@ include::{sourcedir}/deepdive/typesystem/NullAndVoid.java[tags=void_is_an_object
 
 == Generics, oder parametrische Polymorphie
 Bis Java 5 war die Collections-API sehr generisch und lediglich auf `Object` beschränkt. Eine Liste konnte also faktisch
-alle Objekte aufnehmen, die irgendwie von `Object` abgeleiten haben.
+alle Objekte aufnehmen, die irgendwie von `Object` abgeleiten waren.
 Wollte man Objekte aus einer Liste lesen, musste man immer einen expliziten Typecast vollziehen. Was bei unbekannten
 Listen gerne auch mal in einer ClassCastException endete:
 
@@ -160,10 +160,10 @@ einen anderen Parametertyp enthalten. `String` und `Integer`. Gelesen als `List 
 include::{sourcedir}/deepdive/typesystem/Generics.java[tags=generics_in_use]
 ----
 
-Das es sich dabei nun um zwei komplett verschiedene Typen handelt, können wir die Referenzen auch nicht kombinieren. Eine
-`List<String>` ist eben keine `List<Integer>`.
+Auch wenn beide Ausdrücke als Basistyp `List` haben, handelt es sich um zwei komplett verschiedene Typen, die sich nicht
+kombinieren lassen. Eine `List<String>` ist eben keine `List<Integer>`.
 
-Denn auch wenn die Parametertypen von zwei Referenzen in einer gemeinsamen Hierachie existieren, so sind es die
+Und selbst wenn die Parametertypen von zwei Referenzen in einer gemeinsamen Hierachie existieren, so sind es die
 daraus entstandenen parametrisierten Typen nicht.
 
 [source,java]
@@ -171,7 +171,7 @@ daraus entstandenen parametrisierten Typen nicht.
 include::{sourcedir}/deepdive/typesystem/Generics.java[tags=generic_type_not_polymorphic]
 ----
 
-Eine `List<String>` ist keine `List<Object>`, obwohl ein `String` ein `Object` ist! Das trotzdem eine Hierarchie
+Eine `List<String>` ist auch keine `List<Object>`, obwohl ein `String` ein `Object` ist! Das trotzdem eine Hierarchie
 in den generischen Typen existiert und wie diese aussieht, wird später behandelt.
 
 
