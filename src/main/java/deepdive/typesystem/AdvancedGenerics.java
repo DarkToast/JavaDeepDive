@@ -49,6 +49,7 @@ public class AdvancedGenerics {
      * @param <T>
      */
     static class C <T extends List<String>> {
+
         List invariant(T list) {
             return list.subList(0, 1);
         }
@@ -133,9 +134,9 @@ public class AdvancedGenerics {
         }
     }
 
-    static class JsonUsageSimple implements FromJsonSimple<List> {
+    static class MyJsonType implements FromJsonSimple<List> {
         List usage() {
-            return this.fromJson(List.class, "[]");    // Why should FromJsonSimple allow to extended by the JsonUsageSimple type as List-typed?
+            return this.fromJson(List.class, "[]");    // Why should FromJsonSimple allow to extended by the MyJsonType type as List-typed?
         }
     }
     // end::recursive_types_simple[]
@@ -157,9 +158,9 @@ public class AdvancedGenerics {
         }
     }
 
-    static class JsonUsage implements FromJson<JsonUsage> { // <-- Only JsonUsage is allowed here.
-        JsonUsage usage() {
-            return this.fromJson(JsonUsage.class, "[]");    // Why should FromJsonSimple allow to extended by the JsonUsage type as List-typed?
+    static class MyNewJsonType implements FromJson<MyNewJsonType> { // <-- Only MyNewJsonType is allowed here.
+        MyNewJsonType usage() {
+            return this.fromJson(MyNewJsonType.class, "[]");    // Why should FromJsonSimple allow to extended by the MyNewJsonType type as List-typed?
         }
     }
     // tag::recursive_types[]

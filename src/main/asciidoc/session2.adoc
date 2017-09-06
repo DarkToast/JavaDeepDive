@@ -338,22 +338,50 @@ Typisierung von einem `String` aus, es handelt sich aber in Wirklichkeit um ein 
 
 
 
-=== Reifiable Types
+==== Reifiable Types
 
 Ganz zu Anfang haben wir `Array` als einzigen Primitivtyp identifiziert, der eine Collection für andere Typen darstellt.
 Zum Beispiel `String[] stringArray = new String[]`.
 
+Da Arrays von Anfang an Bestandteil der JVM waren, unterliegen sie auch nicht dem type erasure von Generics.
 
+Ein `javap -c` der Primitiven:
 
-
+   int[] iArray;
+   java.lang.Object[] oArray;
 
 === Advanced
-    src/main/java/deepdive/typesystem/AdvancesGenerics.java:10: error: incompatible types: List<String> cannot be converted to List<Object>
-            List<Object> objList = strList;
-
-
 
 ==== Liskovsche Substitutionsprinzip
+[source,java]
+----
+include::{sourcedir}/deepdive/typesystem/AdvancedGenerics.java[tags=substitutability]
+----
+
+
 http://www.nils-haldenwang.de/german/das-liskovsche-substitutionsprinzip-in-java-invarianz-kovarianz-kontravarianz
 
-==== Wildcard
+==== bounded types
+[source,java]
+----
+include::{sourcedir}/deepdive/typesystem/AdvancedGenerics.java[tags=bounded_types]
+----
+
+==== Wildcards
+
+[source,java]
+----
+include::{sourcedir}/deepdive/typesystem/AdvancedGenerics.java[tags=bounded_wildcards]
+----
+
+==== recursive types
+
+[source,java]
+----
+include::{sourcedir}/deepdive/typesystem/AdvancedGenerics.java[tags=recursive_types_simple]
+----
+
+[source,java]
+----
+include::{sourcedir}/deepdive/typesystem/AdvancedGenerics.java[tags=recursive_types]
+----
