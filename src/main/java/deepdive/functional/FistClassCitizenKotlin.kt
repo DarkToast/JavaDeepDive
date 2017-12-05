@@ -1,5 +1,8 @@
 package deepdive.functional
 
+fun add(x: Int, y: Int): Int {
+    return x + y
+}
 
 val fAdd: (Int, Int) -> Int = { x, y ->
     x + y

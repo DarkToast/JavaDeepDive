@@ -6,7 +6,7 @@ import java.util.function.BiFunction;
 public class FistClassCitizen {
 
     // Inline function as a part of the class.
-    public int add(int x, int y) {
+    int add(int x, int y) {
         return x + y;
     }
 
@@ -24,7 +24,7 @@ public class FistClassCitizen {
 
     {
         add(1, 2);
-        fAdd.apply(1, 2);           // In Java, we have to call explicit the `apply` method. :-(
+        fAdd.apply(1, 2);           // To call the function, we have to call explicit the `apply` method in Java. :-(
         fAddSugar.apply(1, 2);
     }
 }

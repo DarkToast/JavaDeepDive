@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 @SuppressWarnings("unused")
 public class HigherOrderFunction {
 
-    // A function, that returns a function.
+    // A function, that returns a function or takes a function as parameter is called a higher order function.
     // Integer -> Integer -> Boolean
     Function<Integer, Boolean> greaterThan(Integer x) {
         return y -> y > x;
@@ -25,7 +25,7 @@ public class HigherOrderFunction {
 
         mapX(10, x -> x.toString());
 
-        // Streams are using high order functions:
+        // Streams are using higher order functions:
         Stream<String> str = Stream.of(1, 2, 3).map(i -> i.toString());
     }
 }

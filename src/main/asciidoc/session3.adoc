@@ -1,0 +1,54 @@
+:sourcedir: ../java
+
+= Teil 3 : Funktionale Programmierung
+
+Die funktionale Programmierung ist eine der großen Stömungen in der Informatik, die sehr oft gegensätzlich zur
+imperativen Programmierung angesehen wird. Und tatsächlich sind die Beweggründe der Entstehung sehr konträr.
+
+Während die imperativen Programmiersprachen zu Anfang von Ingenieuren und Physikern entwickelt wurden, um nicht immer die
+Bits einzeln in das Register zu laden, entwickelte sich die funktionale Programmierung aus der mathematischen Richtung,
+als die Mathematiker erkannten, welches Potential in den aufkommenden elektronischen Rechner steckte.
+
+So entwickelten sich die imperativen Sprachen von ersten Mnemocode-Schnipseln über C und C++ zu moderneren Varianten wie
+Java, C# und Go.
+
+Auf der funktionalen Ebene war 1960 der erste ernstzunehmende Vertreter die Sprache Lisp, welche zur damaligen Zeit
+bereits viele Komfortmechanismen (z.B. automatische Speicherbereinigung etc.) besaß, die erst später in die imperative
+Welt Einzug hielten. Weitere Vertreter der "reinen" funktionalen Sprachen sind denn z.B. Haskell, OCaml und F#.
+
+Die Welten blieben aber nie so rein strikt getrennt. Immer wieder gab es Einflüsse der funktionalen Programmierung in die
+gängigsten Vertreter der Programmiersprachen. So basiert z.B. unser heutiges Verständnis der objektorientierten Programmierung
+größtenteil auf den Lisp Flavors. Aber war der imperative Ansatz doch immer noch Grundlage der gängisten
+Programmiersprachen. So wie MS-DOS noch weit bis zu Windows 98. ;-)
+
+Erst in letzter Zeit flossen die beiden Hauptströmungen mehr und mehr zusammen und auch die Konstrukte rund um das
+Lambdakalkül hielten in die modernen Vertreter der Sprachen ein. Mit einer der ersten Sprachen war Scala, welches
+für sich beanspruchte, die Objektorientierung und die funktionale Sprache zu vereinen. Neue Sprachen wie Swift
+liefern direkt Untersrützung für Funktionen als first class citizen.
+
+Auch Java hatte das Zeichen der Zeit erkannt und mit Java 8 hielten denn auch Lamdaausdrücke in die Sprache ein. Andere
+Vetreter der JVM hatten da aber bereirs früher die Idee. Groovy, Scala und Kotlin. Clojure selbst ist ein rein
+funktionaler Vertreter auf der JVM.
+
+
+== Eine Funktion
+
+[source,java]
+----
+include::{sourcedir}/deepdive/functional/ToBeOrNotToBeAFunction.java[tags=a_function]
+----
+
+[source,java]
+----
+include::{sourcedir}/deepdive/functional/ToBeOrNotToBeAFunction.java[tags=not_a_function]
+----
+
+== First class citizen
+
+== higher order functions
+
+== function composition
+
+== currying
+
+== Monaden

@@ -13,13 +13,13 @@ public class FunctionalInterfaces {
 
     Predicate<Integer> test = (x) -> x == 2;
 
-    // A `functional`-interface for side effects. Strictly speaking, that is not a function.
+    // A `functional`-interface for side effects. Strictly speaking, this is not a function.
     Consumer<Integer> sideEffect = (x) -> System.out.println(x);
 
 
 
-    // --- My own function interface
-    // Every interface with one method, can be used as functional interface.
+    // --- Our own function interface
+    // Every interface with one method, can be used as a functional interface.
 
     interface ToStringer<T> {
         String makeString(T value);
