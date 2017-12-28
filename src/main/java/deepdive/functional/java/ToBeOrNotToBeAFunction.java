@@ -1,4 +1,4 @@
-package deepdive.functional;
+package deepdive.functional.java;
 
 @SuppressWarnings("unused")
 public class ToBeOrNotToBeAFunction {

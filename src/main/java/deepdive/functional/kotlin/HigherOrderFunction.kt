@@ -1,4 +1,4 @@
-package deepdive.functional
+package deepdive.functional.kotlin
 
 import java.util.stream.Stream
 

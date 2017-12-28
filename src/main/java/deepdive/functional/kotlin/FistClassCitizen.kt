@@ -1,4 +1,4 @@
-package deepdive.functional
+package deepdive.functional.kotlin
 
 fun add(x: Int, y: Int): Int {
     return x + y
@@ -13,6 +13,7 @@ val fAdd2 = { x: Int, y: Int ->
 }
 
 val x = run {
+    add(1, 2)
     fAdd(1, 2)
     fAdd2(1, 2)
 }

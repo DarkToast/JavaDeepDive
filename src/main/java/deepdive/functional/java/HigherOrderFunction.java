@@ -1,4 +1,4 @@
-package deepdive.functional;
+package deepdive.functional.java;
 
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -17,6 +17,7 @@ public class HigherOrderFunction {
     <T> T mapX(Integer x, Function<Integer, T> f) {
         return f.apply(x);
     }
+
 
     {
         // We will see this pattern later to be used for currying.
