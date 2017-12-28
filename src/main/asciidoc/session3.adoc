@@ -10,32 +10,54 @@ Bits einzeln in das Register zu laden, entwickelte sich die funktionale Programm
 als die Mathematiker erkannten, welches Potential in den aufkommenden elektronischen Rechner steckte.
 
 So entwickelten sich die imperativen Sprachen von ersten Mnemocode-Schnipseln über C und C++ zu moderneren Varianten wie
-Java, C# und Go.
+Java, C# und Go. Die Sprachen abstrahierten dabei immer weiter die darunter liegende technische Schicht und betteten
+immer weitere Komfortfeatures ein.
 
-Auf der funktionalen Ebene war 1960 der erste ernstzunehmende Vertreter die Sprache Lisp, welche zur damaligen Zeit
-bereits viele Komfortmechanismen (z.B. automatische Speicherbereinigung etc.) besaß, die erst später in die imperative
-Welt Einzug hielten. Weitere Vertreter der "reinen" funktionalen Sprachen sind denn z.B. Haskell, OCaml und F#.
+Auf der funktionalen Ebene ging es genau andersherum. Mit dem Lambdakalkül wurde um 1936 zunächst eine formale und mathematische
+Basis der funktionalen Programmierung gelegt und mit dem aufkommen der ersten brauchbaren Rechner um 1960 mit Lisp zur
+ersten sich durchsetzenden Sprache umgesetzt. Das die Entwickler hier bereits von einer viel höheren Abstraktion kamen
+und möglichst nicht viel tiefer in die Technik einsteigen wollten, merkt man an den bereits damals vorhandenen
+Komfortfeatures wie der automatischen Speicherreservierung- und bereinigung. Die imperativen Entwickler mussten hier noch
+ein paar Jahre warten bis Java mit der virtuelle Maschine daherkam.
 
-Die Welten blieben aber nie so rein strikt getrennt. Immer wieder gab es Einflüsse der funktionalen Programmierung in die
-gängigsten Vertreter der Programmiersprachen. So basiert z.B. unser heutiges Verständnis der objektorientierten Programmierung
-größtenteil auf den Lisp Flavors. Aber war der imperative Ansatz doch immer noch Grundlage der gängisten
-Programmiersprachen. So wie MS-DOS noch weit bis zu Windows 98. ;-)
+Beide Welten kamen sich mit der Zeit immer näher. So basiert z.B. unser heutiges Verständnis der
+objektorientierten Programmierung größtenteil auf den Lisp Flavors. Doch blieb der Kernaspekt der funktionalen
+Programmierung, das Lambdakalkül, immer reiner Teil der funktionalen Programmiersprachen.
 
-Erst in letzter Zeit flossen die beiden Hauptströmungen mehr und mehr zusammen und auch die Konstrukte rund um das
-Lambdakalkül hielten in die modernen Vertreter der Sprachen ein. Mit einer der ersten Sprachen war Scala, welches
-für sich beanspruchte, die Objektorientierung und die funktionale Sprache zu vereinen. Neue Sprachen wie Swift
-liefern direkt Untersrützung für Funktionen als first class citizen.
+In letzter Zeit flossen die beiden Hauptströmungen nun aber mehr und mehr zusammen und auch die Konstrukte rund um das
+Lambdakalkül hielten in die modernen Vertreter der Sprachen ein. Die erste Sprache auf der JVM war Scala, welche
+für sich beanspruchte, die Objektorientierung und die funktionale Sprache ganzheitlich zu vereinen.
 
-Auch Java hatte das Zeichen der Zeit erkannt und mit Java 8 hielten denn auch Lamdaausdrücke in die Sprache ein. Andere
-Vetreter der JVM hatten da aber bereirs früher die Idee. Groovy, Scala und Kotlin. Clojure selbst ist ein rein
-funktionaler Vertreter auf der JVM.
+Neue Sprachen wie Swift liefern direkt die Unterstützung für Funktionen als first class citizen etc. Und selbst die alte
+Tante Java hatte das Zeichen der Zeit erkannt und mit Java 8 hielten denn auch Lamdaausdrücke in die Sprache ein.
 
+
+== Values vs. Variables
+
+Aus imperativen Sprachen kennen wir Variablen als einen benamten, definierten Speicherbereich, der Werte aufnehmen kann.
+Der Speicherbereich ist dabei aber nicht fest, sondern kann jederzeit überschrieben werden.
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/js/ValuesAndVariables.js[tags=imperative]
+----
+
+Die funktionale Welt kennt keine Varibalen, sondern nur Werte (z.B. `5`) und Funktionen, die lediglich einen Namen
+bekommen. Werte sind immer fest und können nicht geändert, sondern nur zur Berechnung herangezogen werden.
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/js/ValuesAndVariables.js[tags=functional]
+----
+
+Während also bei imperativen Sprachen zunächst der Speicherbereich definiert und dann mit Werten gefüllt wird,
+so wird bei funktionalen Sprachen zunächst ein Wert definiert und ihm dann erst ein Name zugewiesen.
 
 == Eine Funktion
 
 [source,java]
 ----
-include::{sourcedir}/deepdive/functional/ToBeOrNotToBeAFunction.java[tags=a_function]
+include::{sourcedir}/deepdive/functional/java/ToBeOrNotToBeAFunction.java[tags=a_function]
 ----
 
 [source,java]
