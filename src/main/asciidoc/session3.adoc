@@ -53,17 +53,36 @@ include::{sourcedir}/deepdive/functional/js/ValuesAndVariables.js[tags=functiona
 Während also bei imperativen Sprachen zunächst der Speicherbereich definiert und dann mit Werten gefüllt wird,
 so wird bei funktionalen Sprachen zunächst ein Wert definiert und ihm dann erst ein Name zugewiesen.
 
-== Eine Funktion
+== Was ist eine Funktion
 
-[source,java]
+Da die funktionale Programmierung sich ursprünglich aus der Mathematik entwicklet hat, so sind
+auch die Funktionen in solchen Sprachen den der Mathematik eng verbunden.
+
+Eine Funktion hat einen Namen und:
+
+* einen oder mehrere Parameter
+* ein Ergebnis auf Basis der Parameter
+
+[source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/java/ToBeOrNotToBeAFunction.java[tags=a_function]
+include::{sourcedir}/deepdive/functional/js/ToBeOrNotToBeAFunction.js[tags=a_function]
 ----
 
-[source,java]
+Wichtig beim letzten Punkt ist die Einschränkung auf die Eingabeparameter. Funktionen, welche Effekte
+außerhalb des Ergebnis haben, bzw. deren Ergebnis von anderen Faktoren, als den Parametern beeinflusst
+werden, heißen seiteneffektbehaftet und gelten im strengen Sinne nicht als Funktionen.
+
+[source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/ToBeOrNotToBeAFunction.java[tags=not_a_function]
+include::{sourcedir}/deepdive/functional/js/ToBeOrNotToBeAFunction.js[tags=not_a_function]
 ----
+
+`setY` ist keine Funktion, da sie kein Ergebnis zurück liefert und als Seiteneffekt eine Variable
+außerhalb ihres Funktionskörpers ändert.
+
+`sideEffectFunction` ist ebenfalls keine Funktion, da sie `x` auf einem anderen Kanal als dem
+Rückgabewert ausgibt und darüber hinaus ihr Ergebnis von `y` beeinflusst wird, welches nicht Teil
+ihrer Parameterlist ist.
 
 == First class citizen
 
