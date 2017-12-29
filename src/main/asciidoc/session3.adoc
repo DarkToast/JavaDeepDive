@@ -89,7 +89,7 @@ NOTE:  __Wie trotz dieser Einschränkung IO Operationen wie das `console.log` in
 findet, sehen wir beim Thema Monaten.__
 
 
-== First class citizen
+== Funktionen als first class citizen
 
 In der funktionalen Programmierung bilden Funktionen nicht nur einen zentralen Aspekt für Berechnungen,
 sondern gelten wie `Values` als so genannte `first class citizens`. Das bedeutet, dass Funktionen ebenfalls
@@ -126,11 +126,28 @@ include::{sourcedir}/deepdive/functional/js/FirstClassCitizens.js[tags=f_as_para
 
 NOTE:  __Im folgenden werden Funktionen mit der ES6 Syntax definiert. Also z.B.__ `(x, y) => x + y`
 
-== higher order functions
+== Higher order functions
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/js/HigherOrderFunction.js[tags=function_builder]
+----
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/js/HigherOrderFunction.js[tags=function_parameter]
+----
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/js/HigherOrderFunction.js[tags=lib_example]
+----
+
+== Currying oder Schönfinkeln
 
 == function composition
 
-== currying
+
 
 == Monaden
 
