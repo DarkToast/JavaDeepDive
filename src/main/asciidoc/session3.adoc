@@ -1,4 +1,4 @@
-:sourcedir: ../java
+:sourcedir: ../js
 
 = Teil 3 : Funktionale Programmierung
 
@@ -39,7 +39,7 @@ Der Speicherbereich ist dabei aber nicht fest, sondern kann jederzeit überschri
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/js/ValuesAndVariables.js[tags=imperative]
+include::{sourcedir}/deepdive/functional/ValuesAndVariables.js[tags=imperative]
 ----
 
 Die funktionale Welt kennt keine Varibalen, sondern nur Werte (z.B. `5`) und Funktionen, die lediglich einen Namen
@@ -47,7 +47,7 @@ bekommen. Werte sind immer fest und können nicht geändert, sondern nur zur Ber
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/js/ValuesAndVariables.js[tags=functional]
+include::{sourcedir}/deepdive/functional/ValuesAndVariables.js[tags=functional]
 ----
 
 Während also bei imperativen Sprachen zunächst der Speicherbereich definiert und dann mit Werten gefüllt wird,
@@ -65,7 +65,7 @@ Eine Funktion hat immer:
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/js/ToBeOrNotToBeAFunction.js[tags=a_function]
+include::{sourcedir}/deepdive/functional/ToBeOrNotToBeAFunction.js[tags=a_function]
 ----
 
 Wichtig beim letzten Punkt ist die Einschränkung auf die Eingabeparameter. Funktionen, welche Effekte
@@ -74,7 +74,7 @@ werden, heißen seiteneffektbehaftet und gelten im strengen Sinne nicht als Funk
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/js/ToBeOrNotToBeAFunction.js[tags=not_a_function]
+include::{sourcedir}/deepdive/functional/ToBeOrNotToBeAFunction.js[tags=not_a_function]
 ----
 
 `setY` ist keine Funktion, da sie kein Ergebnis zurück liefert und als Seiteneffekt eine Variable
@@ -101,7 +101,7 @@ Namen (hier `add`) aufgerufen, aber auch überall eingesetzt werden.
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/js/FirstClassCitizens.js[tags=classic]
+include::{sourcedir}/deepdive/functional/FirstClassCitizens.js[tags=classic]
 ----
 
 Funktionen lassen sich in Javascript aber auch in normalen Variablen oder Konstanden speichern.
@@ -112,7 +112,7 @@ Der zweiten Konstante `fAdd2` wird eine anonyme Funktion zugewiesen, die mit der
 Funktion kann nun auch hier über die Konstante `fAdd2` aufgerufen werden.
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/js/FirstClassCitizens.js[tags=f_as_val]
+include::{sourcedir}/deepdive/functional/FirstClassCitizens.js[tags=f_as_val]
 ----
 
 Das die in Konstanten gespeicherten Funktionen tatsächlich wie normale Werte behandelt werden können, zeigt die
@@ -121,7 +121,7 @@ Funktion `usingAFunction`, die ihrerseits eine Funktion (hier `add`) aufnimmt un
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/js/FirstClassCitizens.js[tags=f_as_param]
+include::{sourcedir}/deepdive/functional/FirstClassCitizens.js[tags=f_as_param]
 ----
 
 NOTE:  __Im folgenden werden Funktionen mit der ES6 Syntax definiert. Also z.B.__ `(x, y) => x + y`
@@ -130,17 +130,17 @@ NOTE:  __Im folgenden werden Funktionen mit der ES6 Syntax definiert. Also z.B._
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/js/HigherOrderFunction.js[tags=function_builder]
+include::{sourcedir}/deepdive/functional/HigherOrderFunction.js[tags=function_builder]
 ----
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/js/HigherOrderFunction.js[tags=function_parameter]
+include::{sourcedir}/deepdive/functional/HigherOrderFunction.js[tags=function_parameter]
 ----
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/js/HigherOrderFunction.js[tags=lib_example]
+include::{sourcedir}/deepdive/functional/HigherOrderFunction.js[tags=lib_example]
 ----
 
 == Currying oder Schönfinkeln
