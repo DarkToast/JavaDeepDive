@@ -53,12 +53,12 @@ include::{sourcedir}/deepdive/functional/js/ValuesAndVariables.js[tags=functiona
 Während also bei imperativen Sprachen zunächst der Speicherbereich definiert und dann mit Werten gefüllt wird,
 so wird bei funktionalen Sprachen zunächst ein Wert definiert und ihm dann erst ein Name zugewiesen.
 
-== Was ist eine Funktion
+== Was ist eine Funktion?
 
 Da die funktionale Programmierung sich ursprünglich aus der Mathematik entwicklet hat, so sind
 auch die Funktionen in solchen Sprachen den der Mathematik eng verbunden.
 
-Eine Funktion hat einen Namen und:
+Eine Funktion hat immer:
 
 * einen oder mehrere Parameter
 * ein Ergebnis auf Basis der Parameter
@@ -84,7 +84,47 @@ außerhalb ihres Funktionskörpers ändert.
 Rückgabewert ausgibt und darüber hinaus ihr Ergebnis von `y` beeinflusst wird, welches nicht Teil
 ihrer Parameterlist ist.
 
+
+NOTE:  __Wie trotz dieser Einschränkung IO Operationen wie das `console.log` in der funktionalen Welt statt
+findet, sehen wir beim Thema Monaten.__
+
+
 == First class citizen
+
+In der funktionalen Programmierung bilden Funktionen nicht nur einen zentralen Aspekt für Berechnungen,
+sondern gelten wie `Values` als so genannte `first class citizens`. Das bedeutet, dass Funktionen ebenfalls
+einem Namen zugewiesen werden können und diese Referenzen wie "normale" `Values` als Parameter und
+Rückgabewerte behandelt werden können.
+
+In Javascript können Funktionen im `imperativen` Stil definiert werden. Die Funktion kann dann über den
+Namen (hier `add`) aufgerufen, aber auch überall eingesetzt werden.
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/js/FirstClassCitizens.js[tags=classic]
+----
+
+Funktionen lassen sich in Javascript aber auch in normalen Variablen oder Konstanden speichern.
+Im folgenden Beispiel wird die Funktion `add` in der Konstante `fAdd` gespeichert. Die Funktion lässt sich nun über
+die Kostante `fAdd` referenzieren und aufrufen.
+
+Der zweiten Konstante `fAdd2` wird eine anonyme Funktion zugewiesen, die mit der ES6 Syntax geschrieben ist. Die
+Funktion kann nun auch hier über die Konstante `fAdd2` aufgerufen werden.
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/js/FirstClassCitizens.js[tags=f_as_val]
+----
+
+Das die in Konstanten gespeicherten Funktionen tatsächlich wie normale Werte behandelt werden können, zeigt die
+Funktion `usingAFunction`, die ihrerseits eine Funktion (hier `add`) aufnimmt und ihr innerhalb ihres Scopes den Namen
+`addFunction` zuweist und worüber die Funktion innerhalb von `usingAFunction` aufgerufen werden kann:
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/js/FirstClassCitizens.js[tags=f_as_param]
+----
+
+NOTE:  __Im folgenden werden Funktionen mit der ES6 Syntax definiert. Also z.B.__ `(x, y) => x + y`
 
 == higher order functions
 
@@ -93,3 +133,6 @@ ihrer Parameterlist ist.
 == currying
 
 == Monaden
+
+https://dgronau.wordpress.com/2011/02/03/funktoren-in-java/
+https://entropia.de/images/6/63/20100613-monaden.pdf
