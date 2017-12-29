@@ -17,3 +17,7 @@ hs_err_pid*
 
 # Build files
 target
+yarn.lock
+yarn-error.log
+
+node_modules

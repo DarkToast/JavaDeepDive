@@ -1,0 +1,31 @@
+{
+  "name": "deepdive",
+  "version": "0.0.1",
+  "description": "Some tutorials for java and functional programming.",
+  "repository": "https://github.com/DarkToast/JavaDeepDive.git",
+  "author": {
+    "name": "Christian Iwanzik",
+    "email": "christian.iwanzik@gmail.com"
+  },
+  "license": "GPL 3.0",
+  "private": true,
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.0.2"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "ava": "^0.23.0"
+  },
+  "ava": {
+    "files": "src/**/*.spec.js",
+    "source": "src/**/*.js",
+    "concurrency": 5,
+    "failFast": true,
+    "verbose": true
+  },
+  "scripts": {
+    "test": "ava"
+  }
+}
