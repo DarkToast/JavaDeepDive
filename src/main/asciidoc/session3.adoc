@@ -128,19 +128,63 @@ NOTE:  __Im folgenden werden Funktionen mit der ES6 Syntax definiert. Also z.B._
 
 == Higher order functions
 
-[source,javascript]
-----
-include::{sourcedir}/deepdive/functional/HigherOrderFunction.js[tags=function_builder]
-----
+Da wir in der funktionalen Welt Funktionen als normale Datenelemente betrachten können, ist es auch möglich, Funktionen
+anderen Funktionen als Parameter zu übergeben, bzw. neue Funktionen als Ergebnis zurück liefern zu lassen.
+
+Diese Funktionen, welche andere Funktionen verarbeiten können, nennt man *higher order function (HOF)*.
+
+=== Funktionen als Parameter
+
+Zunächst zeigt folgendes Beispiel, wie eine Funktion als Parameter an eine HOF übergeben werden kann:
+
+Definiert ist eine HOF `mapX`, die einen übergebenen Wert `x` auf eine weitere Funktion `xMapper` anwendet, die
+ihrerseits als zweiten Paramter an die HOF übergeben wurde.
 
 [source,javascript]
 ----
 include::{sourcedir}/deepdive/functional/HigherOrderFunction.js[tags=function_parameter]
 ----
 
+`mapX` wird nun mit zwei Parametern, einer Zahl und einer Funktion, aufgerufen. Die Funktion ist in diesem Fall eine
+anonyme Funktion, die nur über den Parameter von `mapX` zu einem Namen gelangt. Solche anonymen Funktionen, die
+direkt als Paramter übergeben werden, nennt man auch `Lambda-Ausdrücke`.
+
+Lambda-Ausdrücke sieht man z.B. bei Javascript auch in der normalen Collection-API, wie hier bei einem Array.
+Über die Methode `map` wird eine Funktion `i => i + 2` übergeben, die alle Elemente des Arrays um `2` erhöht.
+
 [source,javascript]
 ----
 include::{sourcedir}/deepdive/functional/HigherOrderFunction.js[tags=lib_example]
+----
+
+=== Funktionen als Ergebnisse
+
+Nachdem wir nun gesehen haben, wie Funktionen an higher-order-functions als Paramter übergeben werden können, fehlen noch
+die Funktionen, welche als Berechnungsergebnisse zurück gegeben werden können.
+
+Als Einstieg haben wir eine HOF `getEqualFunction`, die eine Funktion zum Vergleich zweier Werte zurück
+liefert. Rufen wir nun `getEqualFunction` auf, so erhalten wir als Ergebnis eine neue Funktion, die ihrerseits mit zwei
+Werten aufgerufen werden kann und den eigentlichen Vergleich macht.
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/HigherOrderFunction.js[tags=higher_order_function]
+----
+
+Eine HOF, die immer eine fest definierte Funktion zurück gibt macht allerdings nicht viel Sinn. Interessant wird
+es erst, wenn wir Parameter aus der HOF nehmen, in die neue Funktion einweben und unsere neue Funktion somit
+konfigurierbar machen.
+
+Das nächste Beispiel zeigt die HOF `greaterThan`, die einen Paramter `x` annimmt und diesen in eine neue Funktion
+einwebt: `(y) => x > y`, welche zurückgegeben wird. Ein Aufrufer kann nun diese den Parameter `y` übergeben, welcher
+dann mit dem Wert von `x` aus der Ursprungsfunktion verglichen wird.
+
+Mit diesem Mechanismus können nun beliebig viele Funktionen konfiguriert werden, die immer gegen einen anderen Wert
+vergleichen:
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/HigherOrderFunction.js[tags=function_builder]
 ----
 
 == Currying oder Schönfinkeln
