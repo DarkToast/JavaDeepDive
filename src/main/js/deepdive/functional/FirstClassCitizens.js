@@ -29,5 +29,5 @@ const usingAFunction = (addFunction) => {
     return addFunction(4, 8);
 };
 
-usingAFunction(add); // 12;
+usingAFunction(fAdd); // 12;
 // end::f_as_param[]
