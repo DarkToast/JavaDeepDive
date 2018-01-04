@@ -114,7 +114,7 @@ test('filter returns a subset of the elements which matches the filter', async (
 });
 
 
-test('filter can take every filter', async (t) => {
+test('filter can take every filter function', async (t) => {
     let setABC = Sets.union(aSet, Sets.union(bSet, cSet));
 
     let filteredSet = Sets.filter(setABC, i => false);
