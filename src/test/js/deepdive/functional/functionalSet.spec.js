@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import Sets from '../../../../main/js/deepdive/functional/functionalSet';
+import Sets from './FunctionalSet';
 
 // --- Test data ---
 const a = 1;
