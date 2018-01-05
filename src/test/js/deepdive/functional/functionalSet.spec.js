@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import Sets from './FunctionalSet';
+import Sets from './Set';
 
 // --- Test data ---
 const a = 1;
