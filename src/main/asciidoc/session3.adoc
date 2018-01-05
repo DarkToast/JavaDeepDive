@@ -42,7 +42,7 @@ Der Speicherbereich ist dabei aber nicht fest, sondern kann jederzeit überschri
 include::{sourcedir}/deepdive/functional/ValuesAndVariables.js[tags=imperative]
 ----
 
-Die funktionale Welt kennt keine Varibalen, sondern nur Werte (z.B. `5`) und Funktionen, die lediglich einen Namen
+Die funktionale Welt kennt keine Variablen, sondern nur Werte (z.B. `5`) und Funktionen, die lediglich einen Namen
 bekommen. Werte sind immer fest und können nicht geändert, sondern nur zur Berechnung herangezogen werden.
 
 [source,javascript]
@@ -53,14 +53,16 @@ include::{sourcedir}/deepdive/functional/ValuesAndVariables.js[tags=functional]
 Während also bei imperativen Sprachen zunächst der Speicherbereich definiert und dann mit Werten gefüllt wird,
 so wird bei funktionalen Sprachen zunächst ein Wert definiert und ihm dann erst ein Name zugewiesen.
 
+NOTE: __Unter der Haube läuft es natürlich wieder auf Speichermanipulationen hinaus, aber das weiß ja die Sprache nicht.__
+
 == Was ist eine Funktion?
 
 Da die funktionale Programmierung sich ursprünglich aus der Mathematik entwicklet hat, so sind
-auch die Funktionen in solchen Sprachen den der Mathematik eng verbunden.
+auch die Funktionen in solchen Sprachen denen der Mathematik eng verbunden.
 
 Eine Funktion hat immer:
 
-* einen oder mehrere Parameter
+* einen oder mehrere Eingabeparameter
 * ein Ergebnis auf Basis der Parameter
 
 [source,javascript]
@@ -82,7 +84,7 @@ außerhalb ihres Funktionskörpers ändert.
 
 `sideEffectFunction` ist ebenfalls keine Funktion, da sie `x` auf einem anderen Kanal als dem
 Rückgabewert ausgibt und darüber hinaus ihr Ergebnis von `y` beeinflusst wird, welches nicht Teil
-ihrer Parameterlist ist.
+ihrer Parameterliste ist.
 
 
 NOTE:  __Wie trotz dieser Einschränkung IO Operationen wie das `console.log` in der funktionalen Welt statt
@@ -104,41 +106,41 @@ Namen (hier `add`) aufgerufen, aber auch überall eingesetzt werden.
 include::{sourcedir}/deepdive/functional/FirstClassCitizens.js[tags=classic]
 ----
 
-Funktionen lassen sich in Javascript aber auch in normalen Variablen oder Konstanden speichern.
+Funktionen lassen sich in Javascript aber auch in normalen Variablen oder Konstanten speichern.
 Im folgenden Beispiel wird die Funktion `add` in der Konstante `fAdd` gespeichert. Die Funktion lässt sich nun über
 die Kostante `fAdd` referenzieren und aufrufen.
 
-Der zweiten Konstante `fAdd2` wird eine anonyme Funktion zugewiesen, die mit der ES6 Syntax geschrieben ist. Die
-Funktion kann nun auch hier über die Konstante `fAdd2` aufgerufen werden.
+Der zweiten Konstante `fAdd2` wird eine anonyme Funktion zugewiesen, die mit der verkürzten ES6 Syntax geschrieben ist.
+Die Funktion kann nun auch hier über die Konstante `fAdd2` aufgerufen werden.
 [source,javascript]
 ----
 include::{sourcedir}/deepdive/functional/FirstClassCitizens.js[tags=f_as_val]
 ----
 
 Das die in Konstanten gespeicherten Funktionen tatsächlich wie normale Werte behandelt werden können, zeigt die
-Funktion `usingAFunction`, die ihrerseits eine Funktion (hier `add`) aufnimmt und ihr innerhalb ihres Scopes den Namen
-`addFunction` zuweist und worüber die Funktion innerhalb von `usingAFunction` aufgerufen werden kann:
+Funktion `usingAFunction`, die ihrerseits eine Funktion (hier `fAdd` aus dem letzten Beispiel) aufnimmt und ihr
+innerhalb ihres Scopes den Namen `addFunction` zuweist, worüber die Funktion aufgerufen werden kann:
 
 [source,javascript]
 ----
 include::{sourcedir}/deepdive/functional/FirstClassCitizens.js[tags=f_as_param]
 ----
 
-NOTE:  __Im folgenden werden Funktionen mit der ES6 Syntax definiert. Also z.B.__ `(x, y) => x + y`
+NOTE:  __In den nun folgenden Beispielen werden Funktionen mit der ES6 Syntax definiert. Also z.B.__ `(x, y) => x + y`
 
 == Higher order functions
 
 Da wir in der funktionalen Welt Funktionen als normale Datenelemente betrachten können, ist es auch möglich, Funktionen
 anderen Funktionen als Parameter zu übergeben, bzw. neue Funktionen als Ergebnis zurück liefern zu lassen.
 
-Diese Funktionen, welche andere Funktionen verarbeiten können, nennt man *higher order function (HOF)*.
+Diese Funktionen, welche andere Funktionen verarbeiten können, nennt man *higher order functions (HOF)*.
 
 === Funktionen als Parameter
 
 Zunächst zeigt folgendes Beispiel, wie eine Funktion als Parameter an eine HOF übergeben werden kann:
 
 Definiert ist eine HOF `mapX`, die einen übergebenen Wert `x` auf eine weitere Funktion `xMapper` anwendet, die
-ihrerseits als zweiten Paramter an die HOF übergeben wurde.
+ihrerseits als zweiter Paramter an die HOF übergeben wurde.
 
 [source,javascript]
 ----
@@ -171,9 +173,9 @@ Werten aufgerufen werden kann und den eigentlichen Vergleich macht.
 include::{sourcedir}/deepdive/functional/HigherOrderFunction.js[tags=higher_order_function]
 ----
 
-Eine HOF, die immer eine fest definierte Funktion zurück gibt macht allerdings nicht viel Sinn. Interessant wird
-es erst, wenn wir Parameter aus der HOF nehmen, in die neue Funktion einweben und unsere neue Funktion somit
-konfigurierbar machen.
+Eine HOF, die immer eine fest definierte Funktion zurück gibt macht allerdings nicht viel Sinn. Man könnte so ja
+auch die Vergleichsfunktion direkt schreiben. Interessant wird es erst, wenn wir Parameter aus der HOF nehmen, in die
+neue Funktion einweben und unsere neue Funktion somit konfigurierbar machen.
 
 Das nächste Beispiel zeigt die HOF `greaterThan`, die einen Paramter `x` annimmt und diesen in eine neue Funktion
 einwebt: `(y) => x > y`, welche zurückgegeben wird. Ein Aufrufer kann nun diese den Parameter `y` übergeben, welcher
@@ -189,7 +191,139 @@ include::{sourcedir}/deepdive/functional/HigherOrderFunction.js[tags=function_bu
 
 == Currying oder Schönfinkeln
 
+In einigen Programmiersprachen oder mathematischen Konstrukten, wie dem ursprünglichen Lamdba-Kalkül, besitzen
+Funktionen nur genau einen Eingabewert und einen Rückgabewert. Aus der Praxis kennen wir allerdings nur sehr wenige
+Funktionen, die nur einen Eingabeparameter haben. Ein simples Beispiel wäre eine Additionsfunktion
+`const add = (x, y) => x + y`.
+
+Um diesem Problem zu begegnen formulierten Moses Schönfinkel und Haskell Brooks Curry nacheinander ein Verfahren,
+welches auf Funktionen höherer Ordnung setzt um jede Funktion mehrerer Veränderlicher in eine Funktion mit nur noch
+einem Parameter umzuwandeln.
+
+Das verfahren haben wir bereits im letzten Teil bei der Funktion `greaterThan` gesehen. Generell gesagt wird
+beim Currying aus jeder Funktion
+
+----
+(a, b, .. n) => a + b + ... + n
+----
+
+die Parameter so umgestellt, dass jede Funktion neben ihrem Parmater eine neue Funktion zurück gibt, die einen
+weiteren Parameter verarbeitet:
+
+----
+a => b => ... => n => a + b + ... + n
+----
+
+NOTE: __Schönfinkel gilt als der eigentliche Erfinder des Verfahrens, Curry formalisierte es aber zuerst formal
+      in einer Theorie. Daher spricht man sehr oft von `currying` aber auch von `schönfinkelisation`, bzw. `Schönfinkeln`.
+      Schönfinkel hat nur leider den Nachteil im englischen schwerer aussprechbar zu sein wie Curry, sodass meistens
+      von `currying` die Rede ist. __
+
+Als konkretes Beispiel schauen wir uns wieder die Additionfunktion an. Aus einer Funktion mit zwei Parametern können
+wir nun eine Funktion mit einem Paramater `x` machen, die wiederum eine Funktion mit einem Parameter `y` zurück gibt,
+die wiederum beide Werte `x` und `y` addiert.
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/Currying.js[tags=currying]
+----
+
+Als ein Beispiel für den praktischen Einsatz wollen wir uns eine Environmentsteuerung anschauen. Die Software kann
+also in eine `Test` und einem `Prod`-Modus laufen. Dafür definieren wir erst einmal ein `boolean` und zwei `Environments`:
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/Currying.js[tags=curry-factory-data]
+----
+
+Ein erster Ansatz definiert ein `api`-Objekt als Nutzer des Environments. Das Objekt besitzt die `getCustomer` Funktion,
+die ein `environment` und einen `customer` annimmt und einen HTTP Call simuliert. Beim Aufruf der Funktion muss nun
+jedesmal das Environment mitgegeben werden. Eine Unterscheidung, ob `Prod` oder `Test`, müsste nun bei jedem Aufruf geschehen.
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/Currying.js[tags=curry-factory-oldway]
+----
+
+Neben anderen Lösungen, können wir hier aber auch das Currying benutzen, um die Fallentscheidung, welches Environment
+genutzt werden soll, zentral in das `api`-Objekt auslagern.
+
+Zunächst definieren wir uns eine Curryfunktion `getCustomerCurry`, die als ersten Parameter das environment nimmt und eine
+Funktion zurück gibt, welche dann den `customer` annimmt und den "HTTP Call" vollführt.
+
+Das `api` Objekt definiert nun nicht mehr die Funktion direkt, sondern nutzt `getCustomerCurry` um entweder ein
+`getCustomer` mit dem `testEnvironment` oder `prodEnvironment` zu definieren. Die Nutzer können nun `getCustomer`
+mit dem eigentlichen Customer aufrufen und müssen sich nicht mehr um das Environment kümmern.
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/Currying.js[tags=curry-factory]
+----
+
+Einen anderen Fall können wir direkt im letzten Beispiel finden. Wir haben das `devMode` Flag direkt im `api`-Objekt
+benutzt, obwohl die Variable nicht im Scope von `api` definiert wurde. Diese `Closures` können innerhalb von Funktionen
+und auch Objekten sinnvoll sein, in unserem Beispiel haben wir aber "diese Variable die irgendwo definiert ist und da
+sie da war, haben wir sie halt genutzt".
+
+Diese Closures können wir auch hier etwas einschränken, in dem wir eine `create`-Funktion um das Objekt legen und `devMode`
+als `envMode` Paramter in den Scope eingeben.
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/Currying.js[tags=curry-closure]
+----
+
+NOTE: __Genau genommen ist das letzte Beispiel kein formal korrektes Currying, da wir anstatt einer neuen Funktion ein
+        neues Objekt zurück geben.__
+
+
 == function composition
+
+Die Möglichkeit, Funktionen beliebig zu zu erstellen und zu übergeben, eröffnet ein paar interessante Wege, Funktionen
+geschickt zu kombinieren und somit Logiken aufzutrennen und wiederverwendbar zu machen.
+
+Das erste Beispiel definiert eine Datenstruktur, die zwei Werte (`first` und `second`) enthalten kann und auf die wir
+mit zwei Funktionen (`selectFirst` und `selectSecond`) zugreifen können.
+
+Zunächst definieren wir die `select`-Funktionen. `selectFirst` ist dadurch definiert, dass die Funktion einen ersten
+Parmater `first` annimt und daraufhin eine weitere Funktion zurück gibt. Diese nimmt den `second`-Parameter entgegen
+und gibt daraufhin `first` zurück, was noch im Scope der zweiten Funktion liegt.
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/FunctionalPatterns.js[tags=data_structure-select_first]
+----
+
+`selectSecond` ist analog zu `selectFirst` aufgebaut. Nur das hier der `second` Wert zurück gegeben wird.
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/FunctionalPatterns.js[tags=data_structure-select_second]
+----
+
+Angewendet
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/FunctionalPatterns.js[tags=data_structure-select_usage]
+----
+
+
+
+#[source,javascript]
+#----
+#include::{sourcedir}/deepdive/functional/FunctionalPatterns.js[tags=functional_list]
+#----
+
+#[source,javascript]
+#----
+#include::{sourcedir}/deepdive/functional/FunctionalPatterns.js[tags=validation]
+#----
+
+
+
+
+
 
 
 
@@ -197,3 +331,4 @@ include::{sourcedir}/deepdive/functional/HigherOrderFunction.js[tags=function_bu
 
 https://dgronau.wordpress.com/2011/02/03/funktoren-in-java/
 https://entropia.de/images/6/63/20100613-monaden.pdf
+https://dzone.com/articles/whats-wrong-java-8-currying-vs
