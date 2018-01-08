@@ -23,8 +23,8 @@ const selectSecond = first => second => second;
 
 
 //tag::data_structure-select_usage[]
-selectFirst(1)(2);   // 1
-selectSecond(1)(2);  // 2
+selectFirst(1)(2);   // returns 1
+selectSecond(1)(2);  // returns 2
 //end::data_structure-select_usage[]
 
 
