@@ -193,8 +193,11 @@ include::{sourcedir}/deepdive/functional/HigherOrderFunction.js[tags=function_bu
 
 In einigen Programmiersprachen oder mathematischen Konstrukten, wie dem ursprünglichen Lamdba-Kalkül, besitzen
 Funktionen nur genau einen Eingabewert und einen Rückgabewert. Aus der Praxis kennen wir allerdings nur sehr wenige
-Funktionen, die nur einen Eingabeparameter haben. Ein simples Beispiel wäre eine Additionsfunktion
-`const add = (x, y) => x + y`.
+Funktionen, die nur einen Eingabeparameter haben, sondern mehere, wie dieses simples Beispiel einer Additionsfunktion.
+
+----
+const add = (x, y) => x + y
+----
 
 Um diesem Problem zu begegnen formulierten Moses Schönfinkel und Haskell Brooks Curry nacheinander ein Verfahren,
 welches auf Funktionen höherer Ordnung setzt um jede Funktion mehrerer Veränderlicher in eine Funktion mit nur noch
@@ -245,8 +248,8 @@ jedesmal das Environment mitgegeben werden. Eine Unterscheidung, ob `Prod` oder 
 include::{sourcedir}/deepdive/functional/Currying.js[tags=curry-factory-oldway]
 ----
 
-Neben anderen Lösungen, können wir hier aber auch das Currying benutzen, um die Fallentscheidung, welches Environment
-genutzt werden soll, zentral in das `api`-Objekt auslagern.
+Neben anderen Lösungen, können wir hier aber auch das Currying einsetzen, um die Fallentscheidung, welches Environment
+genutzt werden soll, zentral in das `api`-Objekt auszulagern.
 
 Zunächst definieren wir uns eine Curryfunktion `getCustomerCurry`, die als ersten Parameter das environment nimmt und eine
 Funktion zurück gibt, welche dann den `customer` annimmt und den "HTTP Call" vollführt.
@@ -274,7 +277,9 @@ include::{sourcedir}/deepdive/functional/Currying.js[tags=curry-closure]
 ----
 
 NOTE: __Genau genommen ist das letzte Beispiel kein formal korrektes Currying, da wir anstatt einer neuen Funktion ein
-        neues Objekt zurück geben.__
+        neues Objekt zurück geben. Und zeigt sich auch, dass die "klassischen" Methoden Code zu refactorn nicht
+        mit denen der funktionalen Programmierung kollidieren müssen. Denn ob man das obere Beispiel jetzt unter dem
+        Licht eines "angepassten" Curryings oder einer simplen Wrappermethode sieht, sei dem Leser überlassen.__
 
 
 == function composition
