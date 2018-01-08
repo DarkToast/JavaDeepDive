@@ -29,17 +29,18 @@ const nil = func => func(null)(nil);
  * @returns {function(*=): function(*): *}
  */
 const list = value => tail => func => func(value)(tail);
+//end::functional_list[]
 
 
-// --- Usage
 
+//tag::functional_list-usage[]
 const myList = list(10)(list(15)(list(9)(nil)));
 const concatenated = list(20)(myList);
 
 
 const value1 = concatenated(head);              // 20
 const value2 = concatenated(tail)(tail)(head);  // 15
-//end::functional_list[]
+//end::functional_list-usage[]
 
 
 

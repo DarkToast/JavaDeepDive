@@ -282,54 +282,71 @@ NOTE: __Genau genommen ist das letzte Beispiel kein formal korrektes Currying, d
         Licht eines "angepassten" Curryings oder einer simplen Wrappermethode sieht, sei dem Leser überlassen.__
 
 
-== function composition
+== Praktische Anwendung
 
-Die Möglichkeit, Funktionen beliebig zu zu erstellen und zu übergeben, eröffnet ein paar interessante Wege, Funktionen
-geschickt zu kombinieren und somit Logiken aufzutrennen und wiederverwendbar zu machen.
-
-Das erste Beispiel definiert eine Datenstruktur, die zwei Werte (`first` und `second`) enthalten kann und auf die wir
-mit zwei Funktionen (`selectFirst` und `selectSecond`) zugreifen können.
-
-Zunächst definieren wir die `select`-Funktionen. `selectFirst` ist dadurch definiert, dass die Funktion einen ersten
-Parmater `first` annimt und daraufhin eine weitere Funktion zurück gibt. Diese nimmt den `second`-Parameter entgegen
-und gibt daraufhin `first` zurück, was noch im Scope der zweiten Funktion liegt.
+=== Repeated Parameters with Currying
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/FunctionalPatterns.js[tags=data_structure-select_first]
+include::{sourcedir}/deepdive/functional/RepeatedParametersCurrying.js[]
 ----
 
-`selectSecond` ist analog zu `selectFirst` aufgebaut. Nur das hier der `second` Wert zurück gegeben wird.
+=== Datenvalidierung mit functional composition
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/FunctionalPatterns.js[tags=data_structure-select_second]
+include::{sourcedir}/deepdive/functional/ValidatorWithFunctionalCombination.js[tags=validation]
 ----
 
-Angewendet
+=== funktionale Datenstruktur
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/FunctionalPatterns.js[tags=data_structure-select_usage]
+include::{sourcedir}/deepdive/functional/DataStructure.js[tags=data_structure-select_first]
 ----
 
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/DataStructure.js[tags=data_structure-select_second]
+----
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/DataStructure.js[tags=data_structure-select_usage]
+----
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/DataStructure.js[tags=data_structure-pair]
+----
+
+=== funktionale Listen
 
 
-#[source,javascript]
-#----
-#include::{sourcedir}/deepdive/functional/FunctionalPatterns.js[tags=functional_list]
-#----
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/List.js[tags=functional_list]
+----
 
-#[source,javascript]
-#----
-#include::{sourcedir}/deepdive/functional/FunctionalPatterns.js[tags=validation]
-#----
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/List.js[tags=functional_list-usage]
+----
 
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/List.js[tags=functional_list_length]
+----
 
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/List.js[tags=functional_list_get]
+----
 
-
-
-
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/List.js[tags=functional_list_append]
+----
 
 
 == Monaden

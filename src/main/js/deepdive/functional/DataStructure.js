@@ -28,6 +28,7 @@ selectSecond(1)(2);  // returns 2
 //end::data_structure-select_usage[]
 
 
+//tag::data_structure-pair[]
 /**
  * A function with parameter `first`, that returns
  *   a function with parameter `second`, that returns
@@ -45,6 +46,7 @@ const myNewPair = makePair(5)(6);
 const pair = myNewPair;                   // [Function]
 const first = myNewPair(selectFirst);     // 5
 const second = myNewPair(selectSecond);   // 6
+//end::data_structure-pair[]
 
 console.log(pair + " " + first + " " + second);
 //end::data_structure[]
