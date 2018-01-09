@@ -352,27 +352,51 @@ in sich vereint. Geben wir nun `validator` einen Wert als Parameter wird dieser 
 include::{sourcedir}/deepdive/functional/ValidatorWithFunctionalCombination.js[tags=validation-usage]
 ----
 
-=== funktionale Datenstruktur
+=== funktionale Datenstrukturen
+
+Reizen wir die funktionale Programmierung etwas aus, so lassen sich auch allein mit Funktionen Datenstrukturen
+definieren.
+
+`selectFirst` ist zunächst eine normale Curry-Funktion mit den Parametern `first` und `second` und gibt immer
+`first` zurück.
 
 [source,javascript]
 ----
 include::{sourcedir}/deepdive/functional/DataStructure.js[tags=data_structure-select_first]
 ----
 
+Das Gegenteil ist `selectSecond`. Genauso wie `selectFirst` nimmt diese Funktion die zwei Parameter entgegen,
+gibt aber immer nur `second` zurück.
+
 [source,javascript]
 ----
 include::{sourcedir}/deepdive/functional/DataStructure.js[tags=data_structure-select_second]
 ----
+
+In der Anwendung sehen beide Funktionen so aus:
 
 [source,javascript]
 ----
 include::{sourcedir}/deepdive/functional/DataStructure.js[tags=data_structure-select_usage]
 ----
 
+Nun definieren wir die Funktion `makePair`. Diese Funktion soll uns ein funktionales Tuple von zwei Werten
+erzeugen, auf die wir mit den beiden Funktionen `selectFirst` und `selectSecond` zugreifen können.
+
+Diese Funktion nimmt die Werte `first` und `second` an und liefert am Ende eine Funktion zurück, die eine
+Zugriffsfunktion annimmt, der die beiden Werte zuegwiesen werden.
+
 [source,javascript]
 ----
 include::{sourcedir}/deepdive/functional/DataStructure.js[tags=data_structure-pair]
 ----
+
+Mit `makePair` wird zunächst ein Tuple mit den Werten `5` und `6` erzeugt. `pair` repräsentiert nun dieses
+konkrete Tuple, ist aber auch geichzeitig eine Funktion.
+
+Geben wir nun `pair` die Funktion `selectFirst`, so wird innerhalb von `pair` der Ausdruck `func(first)(second)`
+zu `selectFirst(5)(6)` ausgewertet, welche `5` zurück gibt. Geben wir an `pair` die Funktion `selectSecond`, so
+erhalten wie den zweiten Wert des Tuples.
 
 === funktionale Listen
 

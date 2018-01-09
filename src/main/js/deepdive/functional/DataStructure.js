@@ -41,11 +41,9 @@ const makePair = first => second => func => func(first)(second);
 
 // --- Usage ---
 
-const myNewPair = makePair(5)(6);
-
-const pair = myNewPair;                   // [Function]
-const first = myNewPair(selectFirst);     // 5
-const second = myNewPair(selectSecond);   // 6
+const pair = makePair(5)(6);
+const first = pair(selectFirst);     // 5
+const second = pair(selectSecond);   // 6
 //end::data_structure-pair[]
 
 console.log(pair + " " + first + " " + second);
