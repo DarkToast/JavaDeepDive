@@ -314,7 +314,7 @@ Als Abbruchbedingung definieren wir uns ein Terminatorsymbol und nehmen pragmati
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/RepeatedParametersCurrying.js[]
+include::{sourcedir}/deepdive/functional/usage//RepeatedParametersCurrying.js[]
 ----
 
 `sum` lässt sich nun mit beliebig vielen Werten aufrufen.
@@ -329,7 +329,7 @@ einen Soll-Wert als ersten Parameter, den Ist-Wert als Parameter der inneren Fun
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/ValidatorWithFunctionalCombination.js[tags=validation]
+include::{sourcedir}/deepdive/functional/usage//ValidatorWithFunctionalCombination.js[tags=validation]
 ----
 
 Zusätzlich definieren wir eine Kombinationsfunktion. Diese übernimmt zwei Validatorfunktionen und gibt eine
@@ -337,7 +337,7 @@ neue Validierungsfunktion zurück, die `value` auf die beiden Funktionen anwende
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/ValidatorWithFunctionalCombination.js[tags=validation-combination]
+include::{sourcedir}/deepdive/functional/usage//ValidatorWithFunctionalCombination.js[tags=validation-combination]
 ----
 
 Nun können wir aus den Validierungsfunktionen und der Kombinationsfunktion einen mehrstufigen Validator bauen.
@@ -349,7 +349,7 @@ in sich vereint. Geben wir nun `validator` einen Wert als Parameter wird dieser 
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/ValidatorWithFunctionalCombination.js[tags=validation-usage]
+include::{sourcedir}/deepdive/functional/usage//ValidatorWithFunctionalCombination.js[tags=validation-usage]
 ----
 
 === funktionale Datenstrukturen
@@ -362,7 +362,7 @@ definieren.
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/DataStructure.js[tags=data_structure-select_first]
+include::{sourcedir}/deepdive/functional/usage//DataStructure.js[tags=data_structure-select_first]
 ----
 
 Das Gegenteil ist `selectSecond`. Genauso wie `selectFirst` nimmt diese Funktion die zwei Parameter entgegen,
@@ -370,14 +370,14 @@ gibt aber immer nur `second` zurück.
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/DataStructure.js[tags=data_structure-select_second]
+include::{sourcedir}/deepdive/functional/usage//DataStructure.js[tags=data_structure-select_second]
 ----
 
 In der Anwendung sehen beide Funktionen so aus:
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/DataStructure.js[tags=data_structure-select_usage]
+include::{sourcedir}/deepdive/functional/usage//DataStructure.js[tags=data_structure-select_usage]
 ----
 
 Nun definieren wir die Funktion `makePair`. Diese Funktion soll uns ein funktionales Tuple von zwei Werten
@@ -388,7 +388,7 @@ Zugriffsfunktion annimmt, der die beiden Werte zuegwiesen werden.
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/DataStructure.js[tags=data_structure-pair]
+include::{sourcedir}/deepdive/functional/usage//DataStructure.js[tags=data_structure-pair]
 ----
 
 Mit `makePair` wird zunächst ein Tuple mit den Werten `5` und `6` erzeugt. `pair` repräsentiert nun dieses
@@ -403,27 +403,27 @@ erhalten wie den zweiten Wert des Tuples.
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/List.js[tags=functional_list]
+include::{sourcedir}/deepdive/functional/usage//List.js[tags=functional_list]
 ----
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/List.js[tags=functional_list-usage]
+include::{sourcedir}/deepdive/functional/usage//List.js[tags=functional_list-usage]
 ----
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/List.js[tags=functional_list_length]
+include::{sourcedir}/deepdive/functional/usage//List.js[tags=functional_list_length]
 ----
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/List.js[tags=functional_list_get]
+include::{sourcedir}/deepdive/functional/usage//List.js[tags=functional_list_get]
 ----
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/List.js[tags=functional_list_append]
+include::{sourcedir}/deepdive/functional/usage/List.js[tags=functional_list_append]
 ----
 
 
@@ -432,3 +432,5 @@ include::{sourcedir}/deepdive/functional/List.js[tags=functional_list_append]
 https://dgronau.wordpress.com/2011/02/03/funktoren-in-java/
 https://entropia.de/images/6/63/20100613-monaden.pdf
 https://dzone.com/articles/whats-wrong-java-8-currying-vs
+
+Functional Programming through Lambda Calculus - Greg Michaelson, 2011
