@@ -19,7 +19,12 @@ const minLength = length => value => value.length >= length;
  * @returns {function(*=): *}
  */
 const matchCustom = matchFunction => value => matchFunction(value);
+//end::validation[]
 
+
+
+
+//tag::validation-combination[]
 /**
  * Combines two boolean functions to one function.
  * @param f1
@@ -27,14 +32,23 @@ const matchCustom = matchFunction => value => matchFunction(value);
  * @returns {function(*=): *}
  */
 const combine = (f1, f2) => value => f2(value) && f1(value);
+//end::validation-combination[]
 
 
-const lengthValidator = combine(minLength(5), maxLength(10));
-const validator = combine(lengthValidator, matchCustom(v => v.startsWith('Ha')));
 
 
-console.log(validator("Hallo"));                // true
-console.log(validator("Hall"));                 // false    minLength
-console.log(validator("HalloHalloHallo"));      // false    maxLength
-console.log(validator("hallo"));                // false    custom
-//end::validation[]
+//tag::validation-usage[]
+const min = minLength(5);
+const max = maxLength(10);
+const hallo = matchCustom(v => v.startsWith('Ha'));
+
+
+const lengthValidator = combine(min, max);
+const validator = combine(lengthValidator, hallo);
+
+
+validator("Hallo");                // true
+validator("Hall");                 // false    minLength
+validator("HalloHalloHallo");      // false    maxLength
+validator("hallo");                // false    custom
+//end::validation-usage[]

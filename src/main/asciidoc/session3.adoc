@@ -284,18 +284,72 @@ NOTE: __Genau genommen ist das letzte Beispiel kein formal korrektes Currying, d
 
 == Praktische Anwendung
 
-=== Repeated Parameters with Currying
+In diesem Kapitel werden einige praktische Anwendungen gezeigt, die die funktionale Programmierung ermöglicht.
+Die Beispiele haben nicht den Anspruch einer überragenden Lösung gegenüber anderen, sondern sollen vor Allem die
+Einsatzmöglichkeiten des bisher Gezeigten aufzeigen.
+
+=== Repeated Parameters mit Currying und Rekursion
+
+Repeated Parameters sind mittlerweile ein fester Bestandteil in vielen Sprachen für die Übergabe einer beliebigen
+Anzahl an Parametern eines beliebigen Typs an Funktionen.
+
+In Java existiert zum Beispiel der `...` Ausdruck, um einen Parameter "repeatable" zu machen. `names` ist dann
+lediglich ein Array der Parameter :
+
+[source,java]
+----
+public void repeatedParameters(String... names) {
+    Arrays.stream(names).forEach(System.out::println);
+}
+
+repeatedParameters("Hallo", "Welt", "Wie", "Gehts", "Dir");
+----
+
+Javascript kennt nun dieses Feature nicht. Wir können uns aber mit den Elementen des Currying und der Rekursion
+ein Behelfskonstrukt bauen:
+
+`sum` soll beliebig viele Zahlen addieren. Daher gibt jeder Aufruf von `sum` eine Funktion zurück, die widerum
+ihren Parameter `y`, mit von `x` addiert und wieder als ersten Parameter an `sum` rekursiv weitergibt.
+Als Abbruchbedingung definieren wir uns ein Terminatorsymbol und nehmen pragmatisch `null`.
 
 [source,javascript]
 ----
 include::{sourcedir}/deepdive/functional/RepeatedParametersCurrying.js[]
 ----
 
+`sum` lässt sich nun mit beliebig vielen Werten aufrufen.
+
 === Datenvalidierung mit functional composition
+
+Das nächste Beispiel zeigt, wie wir durch die Kombination aus mehreren Funktionen uns eine Datenvalidierung
+konfigurieren können.
+
+Zunächst definieren wir Validierungsfunktionen, die wir per Currying konfigurieren können. Alle bekommen
+einen Soll-Wert als ersten Parameter, den Ist-Wert als Parameter der inneren Funktion und vergleichen beide Werte.
 
 [source,javascript]
 ----
 include::{sourcedir}/deepdive/functional/ValidatorWithFunctionalCombination.js[tags=validation]
+----
+
+Zusätzlich definieren wir eine Kombinationsfunktion. Diese übernimmt zwei Validatorfunktionen und gibt eine
+neue Validierungsfunktion zurück, die `value` auf die beiden Funktionen anwendet und diese UND-verknüpft.
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/ValidatorWithFunctionalCombination.js[tags=validation-combination]
+----
+
+Nun können wir aus den Validierungsfunktionen und der Kombinationsfunktion einen mehrstufigen Validator bauen.
+Zunächst definieren wir uns mit `max`, `min` und `hallo` drei neue Validatoren.
+
+Mit `combine` kombinieren wir nun `max`, `min` und `hallo` zu einem neuen Validator `validator` der alle drei anderen
+in sich vereint. Geben wir nun `validator` einen Wert als Parameter wird dieser Wert durch alle drei Einzelvalidatoren
+überprüft:
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/ValidatorWithFunctionalCombination.js[tags=validation-usage]
 ----
 
 === funktionale Datenstruktur

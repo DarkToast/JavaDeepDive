@@ -37,9 +37,9 @@ const list = value => tail => func => func(value)(tail);
 const myList = list(10)(list(15)(list(9)(nil)));
 const concatenated = list(20)(myList);
 
-
-const value1 = concatenated(head);              // 20
-const value2 = concatenated(tail)(tail)(head);  // 15
+const value0 = myList(tail)(tail)(head);  // 9
+const value1 = myList(head);              // 10
+const value2 = concatenated(head);        // 20
 //end::functional_list-usage[]
 
 

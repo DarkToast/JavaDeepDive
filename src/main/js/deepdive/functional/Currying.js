@@ -43,7 +43,9 @@ const getCustomerCurry = environment => customer => {
 };
 
 api = {
-    getCustomer: devMode ? getCustomerCurry(testEnvironment) : getCustomerCurry(prodEnvironment)
+    getCustomer: devMode ?
+        getCustomerCurry(testEnvironment) :
+        getCustomerCurry(prodEnvironment)
 };
 
 api.getCustomer("max.mustermann");
@@ -55,7 +57,9 @@ api.getCustomer("bärbel.beispiel");
 //tag::curry-closure[]
 const createApi = envMode => {
     return {
-        getCustomer: envMode ? getCustomerCurry(testEnvironment) : getCustomerCurry(prodEnvironment)
+        getCustomer: envMode ?
+            getCustomerCurry(testEnvironment) :
+            getCustomerCurry(prodEnvironment)
     };
 };
 
