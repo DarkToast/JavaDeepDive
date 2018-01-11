@@ -1,6 +1,7 @@
 import test from 'ava';
 
-import Sets from "../../../../main/js/deepdive/functional/usage/Set";
+import { union, filter, contains, intersect, diff, singleSet, emptySet }
+    from "../../../../main/js/deepdive/functional/usage/Set";
 
 // --- Test data ---
 const a = 1;
@@ -9,19 +10,19 @@ const c = 10;
 
 const unknown = 0;
 
-const aSet = Sets.singleSet(a);
-const bSet = Sets.singleSet(b);
-const cSet = Sets.singleSet(c);
+const aSet = singleSet(a);
+const bSet = singleSet(b);
+const cSet = singleSet(c);
 // -----------------
 
 
 test('an empty set has no a element', async (t) => {
-    t.is(Sets.emptySet(a), false);
+    t.is(emptySet(a), false);
 });
 
 
 test('a single set has the a element', async (t) => {
-    let set = Sets.singleSet(a);
+    let set = singleSet(a);
 
     t.is(set(a), true);
     t.is(set(unknown), false);
@@ -29,15 +30,15 @@ test('a single set has the a element', async (t) => {
 
 
 test('contains checks for an element existence', async (t) => {
-    let set = Sets.singleSet(a);
+    let set = singleSet(a);
 
-    t.is(Sets.contains(set, a), true);
-    t.is(Sets.contains(set, unknown), false);
+    t.is(contains(set, a), true);
+    t.is(contains(set, unknown), false);
 });
 
 
 test('union constructs a union set', async (t) => {
-    let unionSet = Sets.union(aSet, bSet);
+    let unionSet = union(aSet, bSet);
 
     t.is(unionSet(a), true);
     t.is(unionSet(b), true);
@@ -46,7 +47,7 @@ test('union constructs a union set', async (t) => {
 
 
 test('a union of several sets has all elements', async (t) => {
-    let unionSet = Sets.union(aSet, Sets.union(bSet, cSet));
+    let unionSet = union(aSet, union(bSet, cSet));
 
     t.is(unionSet(a), true);
     t.is(unionSet(b), true);
@@ -55,10 +56,10 @@ test('a union of several sets has all elements', async (t) => {
 
 
 test('an intersect contains all elements which are in both sets', async (t) => {
-    let setAB = Sets.union(aSet, bSet);
-    let setCB = Sets.union(cSet, bSet);
+    let setAB = union(aSet, bSet);
+    let setCB = union(cSet, bSet);
 
-    let intersectSet = Sets.intersect(setAB, setCB);
+    let intersectSet = intersect(setAB, setCB);
 
     t.is(intersectSet(a), false);
     t.is(intersectSet(b), true);
@@ -68,9 +69,9 @@ test('an intersect contains all elements which are in both sets', async (t) => {
 
 
 test('an intersect contains no elements if both sets have no some equal elements', async (t) => {
-    let setAB = Sets.union(aSet, bSet);
+    let setAB = union(aSet, bSet);
 
-    let intersectSet = Sets.intersect(setAB, cSet);
+    let intersectSet = intersect(setAB, cSet);
 
     t.is(intersectSet(a), false);
     t.is(intersectSet(b), false);
@@ -79,10 +80,10 @@ test('an intersect contains no elements if both sets have no some equal elements
 
 
 test('a diff contains all elements which are NOT in both sets', async (t) => {
-    let setAB = Sets.union(aSet, bSet);
-    let setCB = Sets.union(cSet, bSet);
+    let setAB = union(aSet, bSet);
+    let setCB = union(cSet, bSet);
 
-    let diffSet = Sets.diff(setAB, setCB);
+    let diffSet = diff(setAB, setCB);
 
     t.is(diffSet(a), true);
     t.is(diffSet(b), false);
@@ -92,9 +93,9 @@ test('a diff contains all elements which are NOT in both sets', async (t) => {
 
 
 test('a diff contains all elements if both sets have no equal elements', async (t) => {
-    let setAB = Sets.union(aSet, bSet);
+    let setAB = union(aSet, bSet);
 
-    let diffSet = Sets.diff(setAB, cSet);
+    let diffSet = diff(setAB, cSet);
 
     t.is(diffSet(a), true);
     t.is(diffSet(b), true);
@@ -103,9 +104,9 @@ test('a diff contains all elements if both sets have no equal elements', async (
 
 
 test('filter returns a subset of the elements which matches the filter', async (t) => {
-    let setABC = Sets.union(aSet, Sets.union(bSet, cSet));
+    let setABC = union(aSet, union(bSet, cSet));
 
-    let filterSet = Sets.filter(setABC, i => i >= b);
+    let filterSet = filter(setABC, i => i >= b);
 
     t.is(filterSet(a), false);
     t.is(filterSet(b), true);
@@ -115,9 +116,9 @@ test('filter returns a subset of the elements which matches the filter', async (
 
 
 test('filter can take every filter function', async (t) => {
-    let setABC = Sets.union(aSet, Sets.union(bSet, cSet));
+    let setABC = union(aSet, union(bSet, cSet));
 
-    let filteredSet = Sets.filter(setABC, i => false);
+    let filteredSet = filter(setABC, i => false);
 
     t.is(filteredSet(a), false);
     t.is(filteredSet(b), false);
