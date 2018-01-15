@@ -1,4 +1,5 @@
 //tag::functional_list[]
+//tag::functional_list-selectors[]
 /**
  *  Like `selectFirst`. This function always returns the actual `value`
  * @param value
@@ -12,15 +13,10 @@ const head = value => tail => value;
  * @returns {function(*): *}
  */
 const tail = value => tail => tail;
+//end::functional_list-selectors[]
 
-/**
- * We have to define a termination element of the list. In our systems it's a
- * function with element `null` and a tail of itself.
- * @param func
- * @returns {*}
- */
-const nil = func => func(null)(nil);
 
+//tag::functional_list-listfunction[]
 /**
  * Our list function. Very similar to `makePair` this function tales a
  * `tail` function as `second` element, which represents all other list elements.
@@ -29,6 +25,18 @@ const nil = func => func(null)(nil);
  * @returns {function(*=): function(*): *}
  */
 const list = value => tail => func => func(value)(tail);
+//end::functional_list-listfunction[]
+
+
+//tag::functional_list-nil[]
+/**
+ * We have to define a termination element of the list. In our systems it's a
+ * function with element `null` and a tail of itself.
+ * @param func
+ * @returns {*}
+ */
+const nil = func => func(null)(nil);
+//end::functional_list-nil[]
 //end::functional_list[]
 
 

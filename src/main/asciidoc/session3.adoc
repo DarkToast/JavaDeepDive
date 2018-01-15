@@ -400,26 +400,75 @@ erhalten wie den zweiten Wert des Tuples.
 
 === funktionale Listen
 
+Denkt man nun den oberen Code etwas weiter, so lassen sich mit `makePair`, `selectFirst` und `selectSecond` auch
+funktionale Listen erstellen.
+
+Beginnen wir wieder mit den Zugriffsfunktionen. Wie `selectFirst` und `selectSecond` werden die Funktionen
+`head' und `tail` definiert.
+
+`head` definiert sich durch eine Funktion, die einen `value` und einen `tail` entgegennimmt und immer `value` zurück
+liefert.
+
+`tail` gibt wiederum immer den Parameter `tail` zurück.
 
 [source,javascript]
 ----
-include::{sourcedir}/deepdive/functional/usage//List.js[tags=functional_list]
+include::{sourcedir}/deepdive/functional/usage//List.js[tags=functional_list-selectors]
 ----
+
+Die Liste als solches besteht nun aus einer Funktion, die einen `value` und einen `tail` bekommt und eine Funktion
+zurückgibt, die eine Selektionsfunktion `func` annimmt und auf diese `value` und `tail` anwendet.
+
+Anders als bei `makePair` besteht `tail` hier immer aus einer weiteren Liste bis das Ende erreicht ist.
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/usage//List.js[tags=functional_list-listfunction]
+----
+
+`tail` muss auch irgendwann an ein Ende kommen. Es wird also eine Terminierung benötigt. In diesem Beispiel haben wir
+keine harte Terminierung, sondern eine `nil`-Liste, die bei der Anwendung von `head` immer `null` und bei `tail`
+immer sich selbst zurück gibt:
+
+[source,javascript]
+----
+include::{sourcedir}/deepdive/functional/usage//List.js[tags=functional_list-nil]
+----
+
+Mit diesen vier Funktionen können wir nun die Liste nun verwenden. Bei der Verwendung fällt auf, dass wir darüber
+hinaus auch eine immutable List entworfen haben. Kleinere Listen lassen sich so problemlos in größere Listen einbetten,
+ohne das größere Mengen der Daten kopiert werden müssen.
 
 [source,javascript]
 ----
 include::{sourcedir}/deepdive/functional/usage//List.js[tags=functional_list-usage]
 ----
 
+Mit dieser konkreten Datenstruktur lassen sich auch weitere Funktionen definieren, die den Zugriff ein wenig erleichtern:
+
+
+`length` liefert die Länge einer Liste zurück. Per Rekursion wird die Liste durchlaufen, bis `tail` das Terminiderungselement
+`nil` ist. Parallel wird ein Counter inkrementiert, der am Ende zurück gegeben wird.
+
 [source,javascript]
 ----
 include::{sourcedir}/deepdive/functional/usage//List.js[tags=functional_list_length]
 ----
 
+Möchten wir mit den bisherigen Funktionen auf ein Element an einem bestimmten Index zugreifen, müssen wir mit `tail`
+so lange die Liste iterieren, bis wir am entsprechenden Element sind. Damit dieser Vorgang nicht immer wiederholt
+werden muss, definiert `get` eine Funktion, die rekursiv bis zu dem entsprechenden Element vordringt und das entsprechende
+Element zurück gibt.
+
 [source,javascript]
 ----
 include::{sourcedir}/deepdive/functional/usage//List.js[tags=functional_list_get]
 ----
+
+In der letzten hier gezeigten Funktion, werden zwei Listen konkateniert. Auch hier wird wieder mit Rekursion gearbeitet.
+Ist die erste Liste gleich die leere Liste `nil`, so wird einfach die zweite Liste als Konkatenation zurück.
+In jedem anderen Fall wird eine neue Liste zurück gegeben, deren `head` das erste Element der ersten Liste ist und deren
+`tail` die Liste, die aus der Konkatenation vom Rest von `list1` und `list2` besteht.
 
 [source,javascript]
 ----
