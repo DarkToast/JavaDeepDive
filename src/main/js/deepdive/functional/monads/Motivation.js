@@ -10,14 +10,14 @@ let customer = {
 
 // Concrete object. We know, that these fields are valid.
 customer.contract.tariff.baseFee;
-//end::simple_object
+//end::simple_object[]
 
 
 
 //tag::substitution[]
-let tariff = {
-    baseFee: 12.99,
-    getBaseFee: () => this.baseFee
+customer = {
+    contract:  null,
+    getContract: () => this.contract
 };
 
 let contract = {
@@ -25,15 +25,14 @@ let contract = {
     getTariff: () => this.tariff
 };
 
-customer = {
-    contract:  null,
-    getContract: () => this.contract
+let tariff = {
+    baseFee: 12.99,
+    getBaseFee: () => this.baseFee
 };
 
 // Substitution through objects and functions. But is every substitution valid?
 customer.getContract().getTariff().getBaseFee();
 //end::substitution[]
-
 
 
 //tag::expectation[]
@@ -53,7 +52,7 @@ baseFee;                                            // =>
 //tag::reality[]
 customer.getContract().getTariff().getBaseFee();    // =>
 
-null.getTariff().getBaseFee();                      // ⚡
+null.getTariff().getBaseFee();                      // ⚡ BÄM ⚡
 
 // TypeError: Cannot read property 'getTariff' of undefined
 //end::reality[]
