@@ -517,24 +517,52 @@ So kann der Typ `Bool` lediglich zwei Werte annehmen: `true` und `false`. Der Ty
 include::{sourcedir}/../kotlin/functionalDDD/Types.kt[tags=simple_types]
 ----
 
-[source,javascript]
-----
-include::{sourcedir}/../kotlin/functionalDDD/Types.kt[tags=kotlin_init_validation]
-----
-
+=== AND Types
 [source,javascript]
 ----
 include::{sourcedir}/../kotlin/functionalDDD/Types.kt[tags=and_types]
 ----
 
-
+=== OR Types
 [source,javascript]
 ----
 include::{sourcedir}/../kotlin/functionalDDD/Types.kt[tags=or_types]
 ----
 
+=== Beispiel einer Registrierung
+[source,javascript]
+----
+include::{sourcedir}/../kotlin/functionalDDD/RegisterCustomer.kt[tags=naiv_customer]
+----
+
+Basistypen:
+[source,javascript]
+----
+include::{sourcedir}/../kotlin/functionalDDD/BaseTypes.kt[tags=base_types]
+----
+
+Optionale Parameter:
+[source,javascript]
+----
+include::{sourcedir}/../kotlin/functionalDDD/BaseTypes.kt[tags=option]
+----
+
+Datenvalidierung und Werterzeugung:
+[source,javascript]
+----
+include::{sourcedir}/../kotlin/functionalDDD/Validation.kt[tags=validation]
+----
+
+[source,javascript]
+----
+include::{sourcedir}/../kotlin/functionalDDD/Validation.kt[tags=explicit_error_handling]
+----
+
+
 https://dgronau.wordpress.com/2011/02/03/funktoren-in-java/
+
 https://entropia.de/images/6/63/20100613-monaden.pdf
+
 https://dzone.com/articles/whats-wrong-java-8-currying-vs
 
 Functional Programming through Lambda Calculus - Greg Michaelson, 2011
