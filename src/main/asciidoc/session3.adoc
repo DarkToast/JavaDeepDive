@@ -504,20 +504,75 @@ Hint: None as the 0 in 3 * 4 * 0 * 5 * 6
 
 == Algebraische Datenstrukturen
 
+=== Kleine Motivation
+
+Wir bauen eine Benutzerregistrierung und bedienen uns einem einzelnen Modell.
+
+[source,javascript]
+----
+include::{sourcedir}/../kotlin/functionalDDD/RegisterCustomer.kt[tags=naiv_customer]
+----
+
+Leider bildet dieses Modell nicht die eigentliche Registrierung ab, die auf Events und einem
+darauf aufbauenden Workflow basiert:
+
+1. Der Kunde regisriert sich mit einem Vornamen, einem optionalen mittleren Namen, einem Nachnamen,
+seiner Emailadresse und einem Passwort. Zusätzlich kann der Kunde eine Einwilligung zur
+Datennutzung geben, damit wir BigDataStuff machen können.
+
+2. Bevor der Kunde sein Konto nutzen kann, muss er zunächst seine Emailadresse verifizieren.
+Dafür wird eine Email an die angegebene Adresse mit einem Verifizierungstoken geschickt.
+
+3. Nachdem der Kunde seine Emailadresse verifiziert hat, hat der Kunde ein voll nutzbares Konto.
+
+Unser naives Datenmodell verursacht nun einige Probleme:
+
+* Den optionalen Charakter des mittleren Namens
+bilden wir nur unzureichend ab. Im Zweifel mit einem `null`, was generell eine eher schlechte Idee ist, da
+es ein nicht unerheblicher Seiteneffekt ist, der bei jedem lesenden Zugriff abgefangen werden muss.
+
+* Die `String`-Felder unterscheiden sich nur durch ihren Namen. Nichts könnte uns davon abhalten `firstName = lastName`
+oder `lastName = email` zu probieren. Zwar würden wir sowas mit unserem Domänenwissen nicht machen, aber ein neuer
+Kollege oder ein anderer Nutzer unseres Modells käme evtl. auf die Idee, dass ein Nachname auch ein Vorname ist.
+
+* Das Emailverifizierungsverfahren bilden wir zur Zeit mit einem `Boolean`-Feld ab. Zwar ist dies eine gültige
+Modellierung, allerings wäre der Umstand einer verifizierten Email besser direkt im Emailmodell aufgehoben.
+
+* Das Passwort wird zunächst im Klartext übermittelt und im Modell abgebildet. Allerdings sollten wir dies nicht zu lange
+tun, um mögliche Angiffsvektoren zu minimieren. Eine frühe Verschlüsselung ist also angebracht. Im naiven Ansatz
+speichern wir zunächst das Klartestpasswort in einem Feld, welches wir im späteren Verlauf verschlüsseln und das Feld
+`passwordHash` setzen, wobei wir sicher gehen müssen, `password` auf `null` oder Ähnliches zu setzen.
+
+Wir wollen nun einen funktionalen Ansatz betrachten, mit dem wir einige dieser Probleme aus dem Weg oder zumindest
+handhabbarer gestalten können.
+
 === Typen im funktionalen Sinne
 
 In funktionalen Sprachen sind Typen nicht das selbe wie z.B. Klassen in einer objektorientieren Sprache. Typen sind
 in erster Linie Namen für eine Anzahl möglicher Werte.
 
-So kann der Typ `Bool` lediglich zwei Werte annehmen: `true` und `false`. Der Typ `Int` kann dagegen die Werte
-`-2147483648` bis `2147483647` annehmen. `String`
+So kann der Typ `Boolean` lediglich zwei Werte annehmen: `true` und `false`. Der Typ `Int` kann dagegen die Werte
+`-2147483648` bis `2147483647` annehmen. `String` dagegen kann für eine definierte Anzahl an Zeichen, beliebig
+viele Permutationen annehmen. Wir können uns auch eigene, neue Typen definieren, die ebenfalls auf einer definierten
+Anzahl möglicher Werte basieren.
 
-[source,javascript]
+Kotlin ist zwar keine rein funktionale Sprache, wir können aber auch hier einige Konzepte anwenden. Zunächst ist
+es relativ simpel, einen neuen Typ einzuführen, der auf einem anderen Typ basiert. Zwar bedienen wir uns hier dem
+Konstrukt der Klasse, unsere Typen haben aber eher die Interpretation eines Typalias, oder einem unterscheidbaren
+"Vetter" des Basistypes.
+
+Allein mit dem folgenden Beispiel haben wir uns einen Vorteil geschaffen, in dem wir einen `Name` von einem `Lastname`
+unterscheidbar gemacht haben. Ein `name: Name = lastName: Lastname` ist somit nicht möglich. Ein Umstand, der uns
+ggf. einige Unittests ersparen dürfte.
+
 ----
 include::{sourcedir}/../kotlin/functionalDDD/Types.kt[tags=simple_types]
 ----
 
 === AND Types
+
+
+
 [source,javascript]
 ----
 include::{sourcedir}/../kotlin/functionalDDD/Types.kt[tags=and_types]
@@ -530,10 +585,6 @@ include::{sourcedir}/../kotlin/functionalDDD/Types.kt[tags=or_types]
 ----
 
 === Beispiel einer Registrierung
-[source,javascript]
-----
-include::{sourcedir}/../kotlin/functionalDDD/RegisterCustomer.kt[tags=naiv_customer]
-----
 
 Basistypen:
 [source,javascript]
