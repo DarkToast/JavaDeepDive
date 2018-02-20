@@ -42,18 +42,19 @@ data class VerifiedCustomer(
 
 
 fun verifyCustomer(customer: UnverifiedCustomer): Customer {
-    val option = confirmEmail(customer.emailAddress, customer.emailVerificationToken)
+    val emailAddress = confirmEmail(customer.emailAddress, customer.emailVerificationToken)
 
-    return when (option) {
-        is Some -> VerifiedCustomer(
-                    customer.firstName,
-                    customer.middleName,
-                    customer.lastName,
-                    option.value,
-                    customer.password,
-                    customer.dataUsageOptIn
-                    )
-        is None -> customer
+    return when (emailAddress) {
+        is ConfirmedEmailAddressAddress ->
+            VerifiedCustomer(
+                customer.firstName,
+                customer.middleName,
+                customer.lastName,
+                emailAddress,
+                customer.password,
+                customer.dataUsageOptIn
+            )
+        is UnconfirmedEmailAddressAddress -> customer
     }
 }
 // end::typed_customer[]

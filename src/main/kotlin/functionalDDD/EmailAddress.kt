@@ -31,12 +31,12 @@ val value = when(t) {
 fun confirmEmail(
         addressUnconfirmed: UnconfirmedEmailAddressAddress,
         token: EmailVerificationToken
-): Option<ConfirmedEmailAddressAddress> {
+): EmailAddress {
 
     return if(token.token == "#validToken") {
-        Some(ConfirmedEmailAddressAddress(addressUnconfirmed.address))
+        ConfirmedEmailAddressAddress(addressUnconfirmed.address)
     } else {
-        None()
+        addressUnconfirmed
     }
 }
 // end::email_confirmation[]
