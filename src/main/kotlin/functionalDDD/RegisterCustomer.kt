@@ -15,18 +15,8 @@ data class NaivCustomer(
 )
 // end::naiv_customer[]
 
-
+// tag::typed_customer[]
 sealed class Customer
-
-data class VerifiedCustomer(
-        val firstName: FirstName,
-        val middleName: Option<MiddleName>,
-        val lastName: LastName,
-
-        val emailAddress: ConfirmedEmailAddressAddress,
-        val password: Password,
-        val dataUsageOptIn: DataUsageOptIn
-) : Customer()
 
 data class UnverifiedCustomer(
         val firstName: FirstName,
@@ -38,6 +28,16 @@ data class UnverifiedCustomer(
         val dataUsageOptIn: DataUsageOptIn,
 
         val emailVerificationToken: EmailVerificationToken
+) : Customer()
+
+data class VerifiedCustomer(
+        val firstName: FirstName,
+        val middleName: Option<MiddleName>,
+        val lastName: LastName,
+
+        val emailAddress: ConfirmedEmailAddressAddress,
+        val password: Password,
+        val dataUsageOptIn: DataUsageOptIn
 ) : Customer()
 
 
@@ -56,3 +56,4 @@ fun verifyCustomer(customer: UnverifiedCustomer): Customer {
         is None -> customer
     }
 }
+// end::typed_customer[]

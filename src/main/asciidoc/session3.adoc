@@ -604,10 +604,30 @@ Datenvalidierung und Werterzeugung:
 include::{sourcedir}/../kotlin/functionalDDD/Validation.kt[tags=validation]
 ----
 
+Aussagekrätigere Fehlerbehandlung
 [source,javascript]
 ----
 include::{sourcedir}/../kotlin/functionalDDD/Validation.kt[tags=explicit_error_handling]
 ----
+
+Email-Workflow:
+[source,javascript]
+----
+include::{sourcedir}/../kotlin/functionalDDD/EmailAddress.kt[tags=email_addresses]
+----
+
+[source,javascript]
+----
+include::{sourcedir}/../kotlin/functionalDDD/EmailAddress.kt[tags=email_confirmation]
+----
+
+Typed Customer:
+
+[source,javascript]
+----
+include::{sourcedir}/../kotlin/functionalDDD/RegisterCustomer.kt[tags=typed_customer]
+----
+
 
 
 https://dgronau.wordpress.com/2011/02/03/funktoren-in-java/
@@ -617,3 +637,5 @@ https://entropia.de/images/6/63/20100613-monaden.pdf
 https://dzone.com/articles/whats-wrong-java-8-currying-vs
 
 Functional Programming through Lambda Calculus - Greg Michaelson, 2011
+
+Domain Modelling mage Functional - Scott Wlaschin, 2018

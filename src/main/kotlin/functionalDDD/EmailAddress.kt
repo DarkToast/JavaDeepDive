@@ -1,6 +1,8 @@
 package functionalDDD
 
 // tag::email_addresses[]
+data class EmailVerificationToken(val token: String)
+
 sealed class EmailAddress(address: String)
 data class ConfirmedEmailAddressAddress(val address: String): EmailAddress(address)
 data class UnconfirmedEmailAddressAddress(val address: String): EmailAddress(address)
@@ -17,17 +19,20 @@ fun createEmail(address: String): Option<EmailAddress> {
         None()
     }
 }
-// end::email_factory[]
 
 val t = createEmail("ich@inter.net")
 val value = when(t) {
     is Some -> println(t.value)
     is None -> println("")
 }
-
+// end::email_factory[]
 
 // tag::email_confirmation[]
-fun confirmEmail(addressUnconfirmed: UnconfirmedEmailAddressAddress, token: EmailVerificationToken): Option<ConfirmedEmailAddressAddress> {
+fun confirmEmail(
+        addressUnconfirmed: UnconfirmedEmailAddressAddress,
+        token: EmailVerificationToken
+): Option<ConfirmedEmailAddressAddress> {
+
     return if(token.token == "#validToken") {
         Some(ConfirmedEmailAddressAddress(addressUnconfirmed.address))
     } else {

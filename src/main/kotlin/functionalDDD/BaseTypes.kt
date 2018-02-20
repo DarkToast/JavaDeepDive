@@ -21,9 +21,3 @@ class Password(private val clear: String) {
 data class DataUsageOptIn(val optIn: Boolean)
 // end::base_types[]
 
-
-
-
-data class EmailVerificationToken(val token: String)
-
-

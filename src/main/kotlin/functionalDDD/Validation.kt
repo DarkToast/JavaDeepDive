@@ -9,6 +9,12 @@ class Firstname private constructor(val name: String) {
         }
     }
 }
+
+val option = Firstname.create("Max.Mustermann")
+val name = when(option) {
+    is Some -> option.value.name
+    is None -> "Error Error"
+}
 // end::validation[]
 
 
