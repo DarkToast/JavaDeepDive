@@ -1,5 +1,8 @@
 package functionalDDD
 
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.Future
+
 val c = UnverifiedCustomer(
     FirstName("Max"),
     None(),
