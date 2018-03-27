@@ -7,7 +7,7 @@ const None = {
 const Some = value => {
     return {
         get: () => value,
-        isPresent: () => false
+        isPresent: () => true
     }
 };
 

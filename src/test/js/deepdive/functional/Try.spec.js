@@ -39,7 +39,7 @@ test('a Success can be mapped', async (t) => {
 
 test('Try has a circuit breaker', async (t) => {
 
-    const baseFeeTry = Try( _ => findCustomerFailure(1) )
+    const baseFeeTry = Try( _ => findCustomerSuccess(1) )
         .map(c => c.getContract())
         .map(con => { throw "foo" });
 
@@ -49,7 +49,7 @@ test('Try has a circuit breaker', async (t) => {
 
 test('Failed Try can be recovered', async (t) => {
 
-    const baseFeeTry = Try( _ => findCustomerFailure(1) )
+    const baseFeeTry = Try( _ => findCustomerSuccess(1) )
         .map(c => c.getContract())
         .map(con => { throw "foo" })
         .recover(err => 28);

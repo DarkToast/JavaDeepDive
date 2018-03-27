@@ -38,4 +38,4 @@ let customer = {
 // Can return null. So, our problem is no solved.
 let cFunctor = CustomerFunctor(customer => customer.getContract());
 
-cFunctor(customer);
+cFunctor(customer); // "contractStub"
