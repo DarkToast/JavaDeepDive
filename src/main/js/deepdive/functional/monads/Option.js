@@ -19,6 +19,7 @@ const Some = (value) => {
     }
 };
 
+
 // Some represents the nil object
 const None = {
     // T => U
@@ -33,6 +34,7 @@ const None = {
 
     getOrElse: fallbackValue => fallbackValue
 };
+
 
 export const Option = (value) => {
     return value == null ? None : Some(value)

@@ -31,6 +31,7 @@ const Success = value => {
     }
 };
 
+
 const Failure = error => {
     return {
         // T => U
@@ -47,6 +48,7 @@ const Failure = error => {
         recover: recoverFunction => Try( _ => recoverFunction(error) )
     }
 };
+
 
 export const Try = runnable => {
     try {
