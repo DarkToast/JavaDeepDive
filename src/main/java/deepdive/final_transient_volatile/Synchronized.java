@@ -10,25 +10,25 @@ import java.util.List;
 // tag::unlocked[]
 class Synchronized {
     // An exclusive monitor object.
-    private final Object lock = new Object();
+
 
     // Only the reference is immutable!
-    private final List<String> names = new ArrayList<>();
+
 
     @Thread1
     public int push(String name) {
         expensiveOperation();
 
-        names.add(name);
-        System.out.println("New list size: " + names.size());
-        return names.size();
+        namesSharedState.add(name);
+        System.out.println("New list size: " + namesSharedState.size());
+        return namesSharedState.size();
     }
 
     @Thread2
     public String pop() {
-        if (!names.isEmpty()) {
-            String element = names.remove(names.size() - 1);
-            System.out.println("New list size: " + names.size());
+        if (!namesSharedState.isEmpty()) {
+            String element = namesSharedState.remove(namesSharedState.size() - 1);
+            System.out.println("New list size: " + namesSharedState.size());
             return element;
         } else {
             return "n/a";
@@ -38,22 +38,18 @@ class Synchronized {
 
 
     // tag::this_synchronized[]
-    @Thread1
-    public synchronized int pushSynced(String name) {
-        // Will lock all other threads
-        expensiveOperation();
+    private final List<String> namesSharedState = new ArrayList<>();
 
-        names.add(name);
-        System.out.println("New list size: " + names.size());
-        return names.size();
+    @Thread1
+    public synchronized void pushSynced(String name) {
+        expensiveOperation();
+        namesSharedState.add(name);
     }
 
     @Thread2
     public synchronized String popSynced() {
-        if (!names.isEmpty()) {
-            String element = names.remove(names.size() - 1);
-            System.out.println("New list size: " + names.size());
-            return element;
+        if (!namesSharedState.isEmpty()) {
+            return namesSharedState.remove(namesSharedState.size() - 1);
         } else {
             return "n/a";
         }
@@ -62,29 +58,23 @@ class Synchronized {
 
 
     // tag::lock_synchronized[]
-    @Thread1
-    public int pushSyncedLocal(String name) {
+    private final Object lock = new Object();
 
-        // not thread safe!
+    @Thread1
+    public void pushSyncedLocal(String name) {
         expensiveOperation();
 
-        // Only the mutable shared object is synchronized.
         synchronized (lock) {
-            names.add(name);
-            System.out.println("New list size: " + names.size());
-            return names.size();
+            namesSharedState.add(name);
         }
     }
 
     @Thread2
     public String popSyncedLocal() {
         synchronized (lock) {
-            if (!names.isEmpty()) {
-                String element = names.remove(names.size() - 1);
-                System.out.println("New list size: " + names.size());
-                return element;
+            if (!namesSharedState.isEmpty()) {
+                return namesSharedState.remove(namesSharedState.size() - 1);
             } else {
-                // Hmmm. Too many "n/a" values on the other thread.
                 return "n/a";
             }
         }
@@ -99,13 +89,13 @@ class Synchronized {
         expensiveOperation();
 
         synchronized (lock) {
-            names.add(name);
-            System.out.println("New list size: " + names.size());
+            namesSharedState.add(name);
+            System.out.println("New list size: " + namesSharedState.size());
 
             // Notify all waiting threads.
             lock.notifyAll();
 
-            return names.size();
+            return namesSharedState.size();
         }
     }
 
@@ -114,7 +104,7 @@ class Synchronized {
         synchronized (lock) {
 
             // Locking wait - must be notified somewhere to prevent a dead lock!
-            if (names.isEmpty()) {
+            if (namesSharedState.isEmpty()) {
                 try {
                     lock.wait();
                 } catch (InterruptedException e) {
@@ -123,8 +113,8 @@ class Synchronized {
             }
 
             // The synchronized mutable access:
-            String element = names.remove(names.size() - 1);
-            System.out.println("New list size: " + names.size());
+            String element = namesSharedState.remove(namesSharedState.size() - 1);
+            System.out.println("New list size: " + namesSharedState.size());
             return element;
         }
     }
